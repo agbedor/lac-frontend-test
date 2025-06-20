@@ -1,0 +1,129 @@
+<app-layout [data]="displayedActions()" [rowTemplate]="actionRow">
+    <!-- <section toolbar class="toolbar">
+        <button>
+            <div class="circle">
+                <i class="fa-solid fa-add"></i>
+            </div>
+        </button>
+        <button>
+            <div class="circle">
+                <i class="fa-solid fa-download"></i>
+            </div>
+        </button>
+        <button>
+            <div class="circle">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </button>
+    </section> -->
+
+    <section toolbar class="toolbar" [ngClass]="{ 'expanded': searchMode }">
+        <!-- Filter Menu -->
+        <button *ngIf="!searchMode">
+            <div class="circle" matTooltip="select filter options"><i class="fa-solid fa-filter"></i></div>
+        </button>
+
+        <!-- <mat-menu #statusMenu="matMenu">
+          <button mat-menu-item (click)="filterCases('all')">All</button>
+          <button mat-menu-item (click)="filterCases('pending')">Pending</button>
+          <button mat-menu-item (click)="filterCases('action taken')">Action Taken</button>
+        </mat-menu> -->
+
+        <!-- Download -->
+        <button *ngIf="!searchMode">
+            <div class="circle" matTooltip="export to excel"><i class="fa-solid fa-download"></i></div>
+        </button>
+
+        <!-- Search button -->
+        <button *ngIf="!searchMode" (click)="toggleSearch()">
+            <div class="circle" matTooltip="search"><i class="fa-solid fa-magnifying-glass"></i></div>
+        </button>
+
+        <!-- Search input -->
+        <input *ngIf="searchMode" #inputRef type="text"
+            placeholder="Search by action id, completed by, mediator, appointment date" class="search-input"
+            (input)="onSearch($event)" (blur)="toggleSearch(inputRef)" autofocus />
+    </section>
+
+    <tr header class="header-row">
+        <td class="header-item">Action Id</td>
+        <td class="header-item">Completed By</td>
+        <td class="header-item">Case Id</td>
+        <td class="header-item">Action Taken</td>
+        <td class="header-item">Appointment Date</td>
+        <td class="header-item">Appointment Time</td>
+        <td class="header-item">Mediator Name</td>
+        <td class="header-item">Remarks</td>
+        <!-- <td class="header-item">Created At</td> -->
+        <td class="header-item">Actions</td>
+    </tr>
+
+    <ng-template #actionRow let-action>
+        <div class="body-container">
+            <!-- Loading State -->
+            <tr class="body-row" *ngIf="loading(); else caseOrNoData">
+                <td colspan="8">
+                    <!-- <mat-progress-bar class="black-bar" mode="buffer"></mat-progress-bar> -->
+                    <p class="loading-text">Loading actions.....</p>
+                </td>
+            </tr>
+            <ng-template #caseOrNoData>
+                <ng-container *ngIf="action?.id; else noData">
+                    <tr class="body-row">
+                        <td class="sub">{{ action.id }}</td>
+                        <td class="sub">{{ action.completed_by?.first_name }} {{ action.completed_by?.last_name }}
+                        </td>
+                        <td class="gre">{{ action.case }}</td>
+                        <td class="ac">{{ action.action_taken }}</td>
+                        <td>{{ action.appointment_date }}</td>
+                        <td>{{ action.appointment_time }}</td>
+                        <td class="sub">{{ action.mediator?.first_name }} {{ action.mediator?.last_name }}</td>
+                        <td>{{ action.remarks }}</td>
+                        <td>
+                            <button class="elip" matTooltip="view more">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-template>
+            <ng-template #noData>
+                <tr class="body-row">
+                    <td colspan="8" class="no-data">No data available</td>
+                </tr>
+            </ng-template>
+        </div>
+    </ng-template>
+
+
+    <td header-item class="header-item">Count: {{ actionCount() }}</td>
+    <div taskbar class="taskbar">
+        <p>Rows Per Page: {{ pageSize }}</p>
+
+        <button mat-icon-button>
+            <div class="circle">
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </button>
+
+        <mat-menu #pageSizeMenu="matMenu">
+            <button mat-menu-item *ngFor="let size of [5, 10, 20]" (click)="changePageSize(size)">
+                {{ size }}
+            </button>
+        </mat-menu>
+
+        <p>Page {{ currentPage }} of {{ totalPages }}</p>
+
+        <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">
+            <div class="circle">
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+        </button>
+
+        <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">
+            <div class="circle">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </button>
+    </div>
+</app-layout>

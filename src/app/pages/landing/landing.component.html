@@ -1,0 +1,68 @@
+<div class="login-container">
+    <!-- Left Section (Login Form) -->
+    <div class="login-left">
+        <!-- <i class="fa-brands fa-dhl"></i> -->
+        <img class="img" src="assets/images/lac_logo.png" alt="Apartment photo" />
+        <!-- <h1>L.A.C</h1> -->
+        <!-- <h3>Log in</h3> -->
+        <p>Welcome back! Please enter your details.</p>
+
+        <form (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Username</mat-label>
+                <input matInput type="text" name="username" [(ngModel)]="username" matInput placeholder="username*"
+                    required />
+                <mat-error>username is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" name="password" [(ngModel)]="password" matInput placeholder="password*"
+                    required />
+                <mat-error>password is required</mat-error>
+            </mat-form-field>
+
+            <div class="options">
+                <mat-checkbox>Remember me</mat-checkbox>
+                <a href="#">Forgot password</a>
+            </div>
+
+            <button mat-raised-button class="full-j">Sign in</button>
+            <button mat-stroked-button class="full-width google-button">
+                <img src="https://img.icons8.com/color/16/google-logo.png" />
+                Sign in with Google
+            </button>
+            <p *ngIf="error" class="error">{{ error }}</p>
+            <p class="signup-text">
+                Don't have an account? <a href="#">Sign up</a>
+            </p>
+        </form>
+        <mat-progress-bar *ngIf="loading" mode="buffer" color="primary"></mat-progress-bar>
+    </div>
+
+    <!-- Right Section (Branding + Chat) -->
+    <div class="login-right">
+        <!-- <div class="welcome">
+            <div class="s">
+                <h1>L.A.C</h1>
+                <i class="fa-brands fa-dhl"></i>
+                <h1>Welcome to Legal Aid Commision</h1>
+                <p>
+                    Effortlessly fill surveys with the power of voice. Simplify data collection, improve response rates,
+                    and
+                    create an engaging experience for your users.
+                </p>
+            </div>
+
+            <div class="chat">
+                <div class="chat-bubble bot">
+                    Hello, this is Soniva, your interviewer. In today's session, we’d like to hear about your experience
+                    with the platform you're currently working with.
+                </div>
+                <div class="chat-bubble user">
+                    Yes, I'm ready. Let's go.
+                </div>
+            </div>
+        </div>
+    </div> -->
+    </div>

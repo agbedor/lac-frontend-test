@@ -1,0 +1,150 @@
+<app-layout [data]="displayedCases()" [rowTemplate]="caseRow">
+  <!-- Toolbar -->
+  <!-- <section toolbar class="toolbar">
+    <button [matMenuTriggerFor]="statusMenu">
+      <div class="circle"><i class="fa-solid fa-filter"></i></div>
+    </button>
+    <mat-menu #statusMenu="matMenu">
+      <button mat-menu-item (click)="filterCases('all')">All</button>
+      <button mat-menu-item (click)="filterCases('pending')">Pending</button>
+      <button mat-menu-item (click)="filterCases('action taken')">Action Taken</button>
+    </mat-menu>
+    <button>
+      <div class="circle"><i class="fa-solid fa-download"></i></div>
+    </button>
+    <button>
+      <div class="circle"><i class="fa-solid fa-magnifying-glass"></i></div>
+    </button>
+  </section> -->
+  <section toolbar class="toolbar" [ngClass]="{ 'expanded': searchMode }">
+    <!-- Filter Menu -->
+    <button *ngIf="!searchMode" [matMenuTriggerFor]="statusMenu">
+      <div class="circle" matTooltip="select filter option"><i class="fa-solid fa-filter"></i></div>
+    </button>
+
+    <mat-menu #statusMenu="matMenu">
+      <button mat-menu-item (click)="filterCases('all')">All</button>
+      <button mat-menu-item (click)="filterCases('pending')">Pending</button>
+      <button mat-menu-item (click)="filterCases('action taken')">Action Taken</button>
+    </mat-menu>
+
+    <!-- Download -->
+    <button *ngIf="!searchMode">
+      <div class="circle" matTooltip="export to excel"><i class="fa-solid fa-download"></i></div>
+    </button>
+
+    <!-- Search button -->
+    <button *ngIf="!searchMode" (click)="toggleSearch()">
+      <div class="circle" matTooltip="search"><i class="fa-solid fa-magnifying-glass"></i></div>
+    </button>
+
+    <!-- Search input -->
+    <input *ngIf="searchMode" #inputRef type="text"
+      placeholder="Search by case id, case relation, case type, created at" class="search-input"
+      (input)="onSearch($event)" (blur)="toggleSearch(inputRef)" autofocus />
+  </section>
+
+  <!-- Header -->
+  <tr header class="header-row">
+    <td class="header-item">Case Id</td>
+    <td class="header-item">Case Status</td>
+    <td class="header-item">Case Relation</td>
+    <td class="header-item">Case Type</td>
+    <td class="header-item">Main Charge</td>
+    <td class="header-item">Case Summary</td>
+    <td class="header-item">Opposition Name</td>
+    <td class="header-item">Actions</td>
+  </tr>
+
+  <!-- Row Template -->
+  <ng-template #caseRow let-case>
+    <div class="body-container">
+      <!-- Loading State -->
+      <tr class="body-row" *ngIf="loading(); else caseOrNoData">
+        <td colspan="8">
+          <!-- <mat-progress-bar class="black-bar" mode="buffer"></mat-progress-bar> -->
+          <p class="loading-text">Loading cases.....</p>
+        </td>
+      </tr>
+
+      <!-- Either Case Row or No Data -->
+      <ng-template #caseOrNoData>
+        <ng-container *ngIf="case?.id; else noData">
+          <tr class="body-row">
+            <td class="sub">{{ case.id }}</td>
+            <td [ngClass]="{
+              'text-red': case.status === 'pending',
+              'text-green': case.status === 'action taken'
+            }">
+              {{ case.status }}
+            </td>
+            <td>{{ case.case_relation?.name }}</td>
+            <td>{{ case.case_type?.name }}</td>
+            <td class="sub">{{ case.main_charge }}</td>
+            <td>{{ case.case_summary }}</td>
+            <td>{{ case.opponent?.first_name }} {{ case.opponent?.last_name }}</td>
+            <td>
+              <!-- <button class="elip" (click)="case.status === 'pending' && createDialog(case)">
+                <i class="fa-solid fa-ellipsis"></i>
+              </button> -->
+              <button class="elip" matTooltip="add action" [class.disabled]="case.status !== 'pending'"
+                [disabled]="case.status !== 'pending'" (click)="createDialog(case)">
+                <i class="fa-solid fa-ellipsis"></i>
+              </button>
+
+
+              <!-- <button class="elip" (click)="createDialog(case)">
+                <i class="fa-solid fa-ellipsis"></i>
+              </button> -->
+            </td>
+          </tr>
+        </ng-container>
+      </ng-template>
+
+      <ng-template #noData>
+        <tr class="body-row">
+          <td colspan="8" class="no-data">No data available</td>
+        </tr>
+      </ng-template>
+
+    </div>
+  </ng-template>
+
+  <!-- Footer Section -->
+  <td header-item class="header-item">Count: {{ caseCount() }}</td>
+
+  <div taskbar class="taskbar">
+    <!-- Rows Per Page -->
+    <p>Rows Per Page: {{ pageSize() }}</p>
+
+    <button [matMenuTriggerFor]="pageSizeMenu">
+      <div class="circle">
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+    </button>
+
+    <mat-menu #pageSizeMenu="matMenu">
+      <button mat-menu-item *ngFor="let size of [5, 10, 20]" (click)="changePageSize(size)">
+        {{ size }}
+      </button>
+    </mat-menu>
+
+    <!-- Page Info -->
+    <p>Page {{ currentPage() }} of {{ totalPages() }}</p>
+
+    <!-- Prev / Next Buttons -->
+    <button (click)="goToPreviousPage()" [disabled]="currentPage() === 1">
+      <div class="circle">
+        <i class="fa-solid fa-chevron-left"></i>
+      </div>
+    </button>
+
+    <button (click)="goToNextPage()" [disabled]="currentPage() === totalPages()">
+      <div class="circle">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+    </button>
+  </div>
+
+
+</app-layout>

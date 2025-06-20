@@ -1,0 +1,142 @@
+<app-layout [data]="displayedApps()" [rowTemplate]="applicationRow">
+  <!-- <section toolbar class="toolbar">
+    <button (click)="createDialog()">
+      <div class="circle">
+        <i class="fa-solid fa-add"></i>
+      </div>
+    </button>
+    <button>
+      <div class="circle">
+        <i class="fa-solid fa-download"></i>
+      </div>
+    </button>
+    <button>
+      <div class="circle">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </button>
+  </section> -->
+
+  <section toolbar class="toolbar" [ngClass]="{ 'expanded': searchMode }">
+    <!-- Filter Menu -->
+    <button (click)="createDialog()" *ngIf="!searchMode">
+      <div class="circle" matTooltip="create new application">
+        <i class="fa-solid fa-add"></i>
+      </div>
+    </button>
+
+    <button *ngIf="!searchMode">
+      <div class="circle" matTooltip="select filter options"><i class="fa-solid fa-filter"></i></div>
+    </button>
+
+    <!-- Download -->
+    <button *ngIf="!searchMode">
+      <div class="circle" matTooltip="export to excel"><i class="fa-solid fa-download"></i></div>
+    </button>
+
+    <!-- Search button -->
+    <button *ngIf="!searchMode" (click)="toggleSearch()">
+      <div class="circle" matTooltip="search"><i class="fa-solid fa-magnifying-glass"></i></div>
+    </button>
+
+    <!-- Search input -->
+    <input *ngIf="searchMode" #inputRef type="text" placeholder="Search by applicationd id, applicant name"
+      class="search-input" (input)="onSearch($event)" (blur)="toggleSearch(inputRef)" autofocus />
+  </section>
+
+  <tr header class="header-row">
+    <td class="header-item">Application Id</td>
+    <td class="header-item">Title</td>
+    <td class="header-item">Name</td>
+    <td class="header-item">Gender</td>
+    <td class="header-item">DOB</td>
+    <td class="header-item">Age</td>
+    <td class="header-item">Id Number</td>
+    <td class="header-item">Employment Status</td>
+    <td class="header-item">Case Id</td>
+    <!-- <td class="header-item">Case Relation</td>
+    <td class="header-item">Case Type</td> -->
+    <!-- <td class="header-item">Main Charge</td> -->
+    <!-- <td class="header-item">Opponent Name</td>
+    <td class="header-item">Opponent Party</td> -->
+    <!-- <td class="header-item">Created At</td> -->
+    <td class="header-item">Actions</td>
+  </tr>
+
+  <ng-template #applicationRow let-app>
+    <div class="body-container">
+      <!-- Loading State -->
+      <tr class="body-row" *ngIf="loading(); else appOrNoData">
+        <td colspan="8">
+          <!-- <mat-progress-bar class="black-bar" mode="buffer"></mat-progress-bar> -->
+          <p class="loading-text">Loading applications.....</p>
+        </td>
+      </tr>
+      <!-- Either Case Row or No Data -->
+      <ng-template #appOrNoData>
+        <ng-container *ngIf="app?.id; else noData">
+          <tr class="body-row">
+            <td class="sub">{{ app.id }}</td>
+            <td>{{ app.title?.name }}</td>
+            <td class="sub">{{ app.first_name }} {{ app.last_name }}</td>
+            <td>{{ app.gender?.name }}</td>
+            <td>{{ app.dob }}</td>
+            <td>{{ app.age }}</td>
+            <td>{{ app.id_number }}</td>
+            <td>{{ app.employment_status?.name }}</td>
+            <td class="red">{{ app.case?.id }}</td>
+            <!-- <td>{{ app.case?.case_relation?.name }}</td>
+        <td>{{ app.case?.case_type?.name }}</td> -->
+            <!-- <td>{{ app.case?.main_charge }}</td> -->
+            <!-- <td>{{ app.case?.opponent?.first_name }} {{ app.case?.opponent?.last_name }}</td>
+        <td>{{ app.case?.opponent?.party?.name }}</td> -->
+            <!-- <td>{{ app.case?.created_at}}</td> -->
+            <td>
+              <button class="elip" matTooltip="options">
+                <i class="fa-solid fa-ellipsis"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-template>
+
+      <ng-template #noData>
+        <tr class="body-row">
+          <td colspan="8" class="no-data">No data available</td>
+        </tr>
+      </ng-template>
+
+    </div>
+  </ng-template>
+
+  <td header-item class="header-item">Count: {{ applicationCount() }}</td>
+  <div taskbar class="taskbar">
+    <p>Rows Per Page: {{ pageSize }}</p>
+
+    <button mat-icon-button>
+      <div class="circle">
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+    </button>
+
+    <mat-menu #pageSizeMenu="matMenu">
+      <button mat-menu-item *ngFor="let size of [5, 10, 20]" (click)="changePageSize(size)">
+        {{ size }}
+      </button>
+    </mat-menu>
+
+    <p>Page {{ currentPage }} of {{ totalPages }}</p>
+
+    <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">
+      <div class="circle">
+        <i class="fa-solid fa-chevron-left"></i>
+      </div>
+    </button>
+
+    <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">
+      <div class="circle">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+    </button>
+  </div>
+</app-layout>

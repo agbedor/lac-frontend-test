@@ -1,0 +1,54 @@
+p {
+    color: black;
+    font-size: 25px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .form-row mat-form-field {
+    flex: 1;
+  }
+  
+  .form-row mat-radio-group {
+    flex: 1;
+  }
+  
+  .entities {
+    color: blue;
+  }
+  
+  .entiti {
+    color: blue;
+    font-size: 30px;
+  }
+  
+  .entitie {
+    color: red;
+  }
+  
+  button.next {
+    color: blue !important;
+    font-size: 22px;
+  }
+  
+  button.cancel {
+    color: red !important;
+    font-size: 22px;
+  }
+  
+  button.back {
+    font-size: 22px;
+  }
+  
+  ::ng-deep .mat-step-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

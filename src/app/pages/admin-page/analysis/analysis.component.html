@@ -1,0 +1,20 @@
+<div class="container">
+    <section class="chart-row">
+        <div class="chart-box">
+            <canvas baseChart [data]="horizontalBarChartData" [options]="horizontalBarChartOptions" [type]="'bar'">
+            </canvas>
+        </div>
+        <div class="chart-box">
+            <canvas baseChart [type]="'bubble'" [data]="bubbleChartData" [options]="bubbleChartOptions"></canvas>
+        </div>
+    </section>
+    <section class="chart-row">
+        <div class="chart-box">
+            <canvas baseChart [type]="'bubble'" [data]="bubbleChartData" [options]="bubbleChartOptions"></canvas>
+        </div>
+        <div class="chart-box">
+            <canvas baseChart [type]="'scatter'" [data]="scatterChartData" [options]="scatterChartOptions">
+            </canvas>
+        </div>
+    </section>
+</div>

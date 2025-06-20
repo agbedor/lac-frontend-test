@@ -1,0 +1,633 @@
+<mat-stepper orientation="horizontal" [linear]="isLinear" #stepper>
+  <!-- Welcome Step (Non-linear) -->
+  <mat-step>
+    <ng-template matStepLabel>Welcome</ng-template>
+    <!-- <img class="im" src="assets/images/lac_logo.png" alt="Apartment photo" /> -->
+    <p class="entiti">Welcome to LEGAL AID COMMISION</p>
+    <p>
+      you're about to fill a form to get approval for a legal case. You are required to add the
+      following entities:
+    </p>
+    <p class="entities">DETAILS</p>
+    <p class="entities">WORK</p>
+    <p class="entities">CASE</p>
+    <P class="entitie">NB: Fields with * are compulsory</P>
+    <P>You may cancel this form any time.</P>
+    <P>Follow the next steps if you wish to continue.</P>
+    <div>
+      <button mat-button (click)="cancel()" class="cancel">Cancel</button>
+      <button mat-button matStepperNext class="next">Next</button>
+    </div>
+  </mat-step>
+
+  <!-- Details Step (Linear) -->
+  <mat-step [stepControl]="detailsFormGroup">
+    <form [formGroup]="detailsFormGroup">
+      <ng-template matStepLabel>Details</ng-template>
+
+      <h3>Applicant Details</h3>
+
+      <!-- Row 1 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstnameCtrl" type="text" placeholder="derrick" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastnameCtrl" type="text" placeholder="agbedor" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Middle Name</mat-label>
+          <input matInput formControlName="middlenameCtrl" type="text" placeholder="fiifi" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Title</mat-label>
+          <select matNativeControl required formControlName="titleCtrl">
+            <option [ngValue]="null">-- select title --</option>
+            <option *ngFor="let title of titles()" [ngValue]="title">
+              {{ title.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input readonly matInput [matDatepicker]="dobPicker" formControlName="dobCtrl" [max]="maxDate" />
+          <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dobPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Gender</mat-label>
+          <select matNativeControl required formControlName="genderCtrl">
+            <option [ngValue]="null">-- select gender --</option>
+            <option *ngFor="let gen of gendertypes()" [ngValue]="gen">
+              {{ gen.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Select Id Type</mat-label>
+          <select matNativeControl required formControlName="idTypeCtrl">
+            <option [ngValue]="null">-- select id type --</option>
+            <option *ngFor="let idtype of idtypes()" [ngValue]="idtype">
+              {{ idtype.name }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Id Number</mat-label>
+          <input matInput formControlName="idCtrl" type="text" placeholder="GHA-9128388" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Select Nationality</mat-label>
+          <select matNativeControl required formControlName="nationalityCtrl">
+            <option [ngValue]="null">-- select nationality --</option>
+            <option *ngFor="let nation of nationalities()" [ngValue]="nation">
+              {{ nation.name }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Language</mat-label>
+          <select matNativeControl required formControlName="languageCtrl">
+            <option [ngValue]="null">-- select language --</option>
+            <option *ngFor="let lang of languages()" [ngValue]="lang">
+              {{ lang.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 8 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="emailCtrl" type="email" placeholder="agb@mail.com" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input matInput formControlName="phonenumberCtrl" type="text" placeholder="0203485933" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 7 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Residential Address</mat-label>
+          <input matInput formControlName="addressCtrl" type="text" placeholder="1 or 9" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Period of Stay</mat-label>
+          <input matInput formControlName="periodofstayCtrl" type="text" placeholder="1 or 9" required />
+        </mat-form-field>
+      </div>
+
+
+      <h3>Family Details</h3>
+
+      <!-- Row 6 -->
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Select Marital Status</mat-label>
+          <select matNativeControl required formControlName="maritalstatusCtrl">
+            <option [ngValue]="null">-- select marital status --</option>
+            <option *ngFor="let masta of maritalstatus()" [ngValue]="masta">
+              {{ masta.name }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Spouse Gender</mat-label>
+          <select matNativeControl required formControlName="spouseGenderCtrl">
+            <option [ngValue]="null">-- select spouse gender --</option>
+            <option *ngFor="let spougen of gendertypes()" [ngValue]="spougen">
+              {{ spougen.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 6 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Spouse First Name</mat-label>
+          <input matInput formControlName="spouseFirstNameCtrl" type="text" placeholder="mia" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Spouse Last Name</mat-label>
+          <input matInput formControlName="spouseLastNameCtrl" type="text" placeholder="khalifa" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="spouseAddressCtrl" type="text" placeholder="22 jump street" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input matInput formControlName="spousePhoneNumberCtrl" type="text" placeholder="0203485933" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Select Spouse Job</mat-label>
+          <select matNativeControl required formControlName="spouseJobCtrl">
+            <option [ngValue]="null">-- select spouse job --</option>
+            <option *ngFor="let spojob of jobs()" [ngValue]="spojob">
+              {{ spojob.name }}
+            </option>
+          </select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Income</mat-label>
+          <input matInput formControlName="spouseIncomeCtrl" type="number" placeholder="3400" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 6 -->
+      <div class="form-row">
+        <label class="radio-label">Any Children?</label>
+        <mat-radio-group formControlName="hasChildrenCtrl">
+          <mat-radio-button value="1">Yes</mat-radio-button>
+          <mat-radio-button value="2">No</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Number of Children</mat-label>
+          <input matInput formControlName="childCtrl" type="number" placeholder="1 or 9" required />
+        </mat-form-field>
+      </div>
+
+      <h3>Representative</h3>
+
+      <!-- Row 6 -->
+      <div class="form-row">
+        <label class="radio-label">Are You Representing anybody?</label>
+        <mat-radio-group formControlName="hasRepCtrl">
+          <mat-radio-button value="1">Yes</mat-radio-button>
+          <mat-radio-button value="2">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field>
+          <mat-label>Select Gender</mat-label>
+          <select matNativeControl required formControlName="repGenderCtrl">
+            <option [ngValue]="null">-- select gender --</option>
+            <option *ngFor="let repgen of gendertypes()" [ngValue]="repgen">
+              {{ repgen.name }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Age</mat-label>
+          <input matInput formControlName="repAgeCtrl" min="0" max="17" (input)="onAgeInput($event)" type="number"
+            placeholder="16" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="repFirstNameCtrl" type="text" placeholder="Jon" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="repLastNameCtrl" type="text" placeholder="Jane" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Reason</mat-label>
+          <textarea matInput formControlName="reasonCtrl" type="text" placeholder="reason"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button mat-button (click)="cancel()" class="cancel">Cancel</button>
+        <button mat-button matStepperPrevious class="back">Back</button>
+        <!-- <button mat-button matStepperNext [disabled]="!detailsFormGroup.valid" class="next">
+          Next
+        </button> -->
+        <button mat-button (click)="goToNextStep(detailsFormGroup, stepper)" class="next">
+          Next
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Work Step (Linear) -->
+  <mat-step [stepControl]="workFormGroup">
+    <form [formGroup]="workFormGroup">
+      <ng-template matStepLabel>Work</ng-template>
+
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Select Employment Status</mat-label>
+          <select matNativeControl required formControlName="employmentstatusCtrl">
+            <option [ngValue]="null">-- select employemnt status --</option>
+            <option *ngFor="let empsta of employmentstatus()" [ngValue]="empsta">
+              {{ empsta.name }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Job</mat-label>
+          <select matNativeControl required formControlName="jobCtrl">
+            <option [ngValue]="null">-- select job --</option>
+            <option *ngFor="let job of jobs()" [ngValue]="job">
+              {{ job.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Qualification</mat-label>
+          <input matInput formControlName="qualificationCtrl" type="text" placeholder="phd" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Working Period</mat-label>
+          <input matInput formControlName="workingperiodCtrl" type="text" placeholder="2" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Income</mat-label>
+          <input matInput formControlName="incomeCtrl" type="number" placeholder="3000" required />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Employer Type</mat-label>
+          <select matNativeControl required formControlName="employertypeCtrl">
+            <option [ngValue]="null">-- select employer type --</option>
+            <option *ngFor="let emptype of employertypes()" [ngValue]="emptype">
+              {{ emptype.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Employer Name</mat-label>
+          <input matInput formControlName="employernameCtrl" type="text" placeholder="STL Limited" required />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Employer Address</mat-label>
+          <input matInput formControlName="employeraddressCtrl" type="text" placeholder="22 jump street" required />
+        </mat-form-field>
+      </div>
+
+      <label class="radio-label">Do You Have Any Asset?</label>
+      <mat-radio-group formControlName="anyAssetCtrl">
+        <mat-radio-button value="1">Yes</mat-radio-button>
+        <mat-radio-button value="2">No</mat-radio-button>
+      </mat-radio-group>
+
+      <!-- Row 3 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Specify</mat-label>
+          <input matInput formControlName="assetCtrl" type="text" placeholder="house" required />
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button (click)="cancel()" class="cancel">Cancel</button>
+        <button mat-button matStepperPrevious class="back">Back</button>
+        <!-- <button mat-button matStepperNext [disabled]="!workFormGroup.valid" class="next">
+          Next
+        </button> -->
+        <button mat-button (click)="goToNextStep(workFormGroup, stepper)" class="next">
+          Next
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Case Step (Linear) -->
+  <mat-step [stepControl]="caseFormGroup">
+    <form [formGroup]="caseFormGroup">
+      <ng-template matStepLabel>Case</ng-template>
+
+      <h3>Case</h3>
+
+      <!-- Row 1 -->
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Select Case Type</mat-label>
+          <select matNativeControl required formControlName="caseTypeCtrl">
+            <option [ngValue]="null">-- select case type --</option>
+            <option *ngFor="let casetype of casetypes()" [ngValue]="casetype">
+              {{ casetype.name }}
+            </option>
+          </select>
+          <mat-error *ngIf="caseFormGroup.get('caseTypeCtrl')?.hasError('required')">
+            case type is required
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Main Charge</mat-label>
+          <input matInput formControlName="mainChargeCtrl" type="text" placeholder="theft" />
+          <mat-error *ngIf="caseFormGroup.get('mainChargeCtrl')?.hasError('required')">
+            main charge is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="form-row">
+        <label class="radio-label">Case Already In Court?</label>
+        <mat-radio-group formControlName="inCourtCtrl">
+          <mat-radio-button value="1">Yes</mat-radio-button>
+          <mat-radio-button value="2">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field appearance="outline">
+          <mat-label>Suit No</mat-label>
+          <input matInput formControlName="suitNoCtrl" type="text" placeholder="cc29" required />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Select Court Type</mat-label>
+          <select matNativeControl required formControlName="courtTypeCtrl">
+            <option [ngValue]="null">-- select court type --</option>
+            <option *ngFor="let courtype of courttypes()" [ngValue]="courtype">
+              {{ courtype.name }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Court Room</mat-label>
+          <select matNativeControl required formControlName="courtRoomCtrl">
+            <option [ngValue]="null">-- select court room --</option>
+            <option *ngFor="let couroom of courtrooms()" [ngValue]="couroom">
+              {{ couroom.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Case Duration</mat-label>
+          <input matInput formControlName="caseDurationCtrl" type="text" placeholder="5" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Case Relation</mat-label>
+          <select matNativeControl required formControlName="caseRelationCtrl">
+            <option [ngValue]="null">-- select case relation --</option>
+            <option *ngFor="let caserela of parties()" [ngValue]="caserela">
+              {{ caserela.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <h3>Beneficiary</h3>
+
+      <!-- Row 5 -->
+      <div class="form-row">
+        <label class="radio-label">Ever Benefited From The Legal Aid Commission?</label>
+        <mat-radio-group formControlName="beneficiaryCtrl">
+          <mat-radio-button value="1">Yes</mat-radio-button>
+          <mat-radio-button value="2">No</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field>
+          <mat-label>Select Beneficiary Type</mat-label>
+          <select matNativeControl required formControlName="beneficiaryTypeCtrl">
+            <option [ngValue]="null">-- select beneficiary type --</option>
+            <option *ngFor="let benetype of beneficiarytypes()" [ngValue]="benetype">
+              {{ benetype.name }}
+            </option>
+          </select>
+        </mat-form-field>
+
+      </div>
+
+      <!-- Row 6 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Number Of Times</mat-label>
+          <input matInput formControlName="numOfTimesCtrl" type="number" placeholder="5" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Previous Case Number</mat-label>
+          <input matInput formControlName="prevCaseNumCtrl" type="text" placeholder="cc782" />
+        </mat-form-field>
+      </div>
+
+      <h3>Opponent</h3>
+
+      <!-- Row 7 -->
+      <div class="form-row">
+        <mat-form-field>
+          <mat-label>Select Opponent Party</mat-label>
+          <select matNativeControl required formControlName="oppPartyCtrl">
+            <option [ngValue]="null">-- select opponent party --</option>
+            <option *ngFor="let oppparty of parties()" [ngValue]="oppparty">
+              {{ oppparty.name }}
+            </option>
+          </select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Opponent Gender</mat-label>
+          <select matNativeControl required formControlName="oppGenderCtrl">
+            <option [ngValue]="null">-- select opponent gender --</option>
+            <option *ngFor="let oppgen of gendertypes()" [ngValue]="oppgen">
+              {{ oppgen.name }}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+
+      <!-- Row 8 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="oppFirstNameCtrl" type="text" placeholder="Jane or John" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="oppLastNameCtrl" type="text" placeholder="Doe" />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 8 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Opp Address</mat-label>
+          <input matInput formControlName="oppAddyCtrl" type="text" placeholder="cc782" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Opp Contact</mat-label>
+          <input matInput formControlName="oppContactCtrl" type="text" placeholder="cc782" />
+        </mat-form-field>
+      </div>
+
+      <!-- Row 9 -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Case Summary</mat-label>
+          <textarea matInput formControlName="caseSummCtrl" type="text" placeholder="summarize case"></textarea>
+        </mat-form-field>
+      </div>
+
+      <h3>Declaration</h3>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Declaration</mat-label>
+          <textarea matInput placeholder="declaration" readonly>
+                I hereby declare that the above information given by me is true, correct and complete to the best of my knowledge. I have been made to under- stand that any inappropriate declaration could lead to the necessary administrative and or legal action being taken against me.          </textarea>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button mat-button (click)="cancel()" class="cancel">Cancel</button>
+        <button mat-button matStepperPrevious class="back">Back</button>
+        <!-- <button mat-button matStepperNext [disabled]="!caseFormGroup.valid" class="next">
+            Next
+          </button> -->
+        <button mat-button (click)="goToNextStep(caseFormGroup, stepper)" class="next">
+          Next
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- Confirm Step -->
+  <mat-step>
+    <ng-template matStepLabel>Confirm</ng-template>
+    <h2>Review Your Information</h2>
+
+    <h3>Details</h3>
+    <p>first name: {{ detailsFormGroup.value.firstnameCtrl }}</p>
+    <p>last name: {{ detailsFormGroup.value.lastnameCtrl }}</p>
+    <p>middle name: {{ detailsFormGroup.value.middlenameCtrl || 'null' }}</p>
+    <p>title: {{ detailsFormGroup.value.titleCtrl?.name }}</p>
+    <p>dob: {{ detailsFormGroup.value.dobCtrl }}</p>
+    <p *ngIf="ageInYears !== null">Age: {{ ageInYears }} years</p>
+    <p>gender: {{ detailsFormGroup.value.genderCtrl?.name }}</p>
+    <p>id type: {{ detailsFormGroup.value.idTypeCtrl?.name }}</p>
+    <p>id number: {{ detailsFormGroup.value.idCtrl }}</p>
+    <p>nationality: {{ detailsFormGroup.value.nationalityCtrl?.name }}</p>
+    <p>Language: {{ detailsFormGroup.value.languageCtrl?.name }}</p>
+    <p>email: {{ detailsFormGroup.value.emailCtrl }}</p>
+    <p>phone number: {{ detailsFormGroup.value.phonenumberCtrl }}</p>
+    <p>residential adress: {{ detailsFormGroup.value.addressCtrl }}</p>
+    <p>period of stay: {{ detailsFormGroup.value.periodofstayCtrl }}</p>
+    <p>marital status: {{ detailsFormGroup.value.maritalstatusCtrl?.name }}</p>
+    <p>spouse gender: {{ detailsFormGroup.value.spouseGenderCtrl?.name || 'null' }}</p>
+    <p>spouse first name: {{ detailsFormGroup.value.spouseFirstNameCtrl || 'null' }}</p>
+    <p>spouse last name: {{ detailsFormGroup.value.spouseLastNameCtrl || 'null' }}</p>
+    <p>spouse address: {{ detailsFormGroup.value.spouseAddressCtrl || 'null' }}</p>
+    <p>spouse phone number: {{ detailsFormGroup.value.spousePhoneNumberCtrl || 'null' }}</p>
+    <p>spouse job: {{ detailsFormGroup.value.spouseJobCtrl?.name || 'null' }}</p>
+    <p>spouse income: {{ detailsFormGroup.value.spouseIncomeCtrl || 'null' }}</p>
+    <p>child: {{ detailsFormGroup.value.childCtrl || 'null' }}</p>
+
+    <h3>Case</h3>
+    <p>case type: {{ caseFormGroup.value.caseTypeCtrl?.name }}</p>
+    <p>suit number: {{ caseFormGroup.value.suitNoCtrl || 'null' }}</p>
+    <p>court type: {{ caseFormGroup.value.courtTypeCtrl?.name || 'null' }}</p>
+    <p>court room: {{ caseFormGroup.value.courtRoomCtrl?.name || 'null' }}</p>
+    <p>case relation: {{ caseFormGroup.value.caseRelationCtrl?.name }}</p>
+    <p>beneficiary type: {{ caseFormGroup.value.beneficiaryTypeCtrl?.name || 'null' }}</p>
+    <p>opponent party: {{ caseFormGroup.value.oppPartyCtrl?.name }}</p>
+    <p>main charge: {{ caseFormGroup.value.mainChargeCtrl }}</p>
+    <p>number of times: {{ caseFormGroup.value.numOfTimesCtrl || 'null' }}</p>
+    <p>previous case number: {{ caseFormGroup.value.prevCaseNumCtrl || 'null' }}</p>
+    <p>opponent party: {{ caseFormGroup.value.oppPartyCtrl?.name }}</p>
+    <p>opponent first name: {{ caseFormGroup.value.oppFirstNameCtrl }}</p>
+    <p>opponent last name: {{ caseFormGroup.value.oppLastNameCtrl }}</p>
+    <p>opponent gender: {{ caseFormGroup.value.oppGenderCtrl?.name }}</p>
+    <p>opponent address: {{ caseFormGroup.value.oppAddyCtrl }}</p>
+    <p>opponent contact: {{ caseFormGroup.value.oppContactCtrl }}</p>
+    <p>case summary: {{ caseFormGroup.value.caseSummCtrl }}</p>
+
+    <div>
+      <button mat-button (click)="cancel()" class="cancel">Cancel</button>
+      <button mat-button matStepperPrevious class="back">Back</button>
+      <!-- <button mat-button (click)="submit()" [disabled]="!detailsFormGroup.valid" class="next">
+        Submit
+      </button> -->
+      <button mat-button (click)="submit()" class="next">
+        <!-- <ng-container *ngIf="!loading">Submit</ng-container>
+        <ng-container *ngIf="loading">
+          <mat-spinner diameter="20" color="primary"></mat-spinner>
+        </ng-container> -->
+        Submit
+      </button>
+      <mat-progress-bar *ngIf="loading" mode="buffer" color="primary"></mat-progress-bar>
+    </div>
+  </mat-step>
+</mat-stepper>

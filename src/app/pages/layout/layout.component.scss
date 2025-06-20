@@ -1,0 +1,51 @@
+/* whole page */
+.container {
+    box-sizing: border-box; /* Includes padding in height calculation */
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 60px); /* Navbar only */
+    justify-content: space-between;
+    padding: 30px;
+    overflow: auto;
+    align-items: center;
+  }
+  
+  /* whole table */
+  .table {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Takes full available width */
+  }
+  
+  /* header */
+  .header-container {
+    height: 40px;
+    border: 1px solid rgba(223, 223, 223, 255);
+    border-radius: 8px 8px 0 0;
+    border-bottom: 0px;
+    padding-left: 60px;
+  }
+  
+  /* footer */
+  .footer-container {
+    height: 40px;
+    border: 1px solid rgba(223, 223, 223, 255);
+    border-radius: 0 0 8px 8px;
+    background-color: #fff;
+    padding-left: 60px;
+    padding-right: 60px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .footer-row {
+    color: rgb(181, 181, 181);
+    display: flex;
+    color: grey;
+    font-size: 14px;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* taskbar */
+  

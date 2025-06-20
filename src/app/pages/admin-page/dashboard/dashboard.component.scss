@@ -1,0 +1,41 @@
+:host {
+    display: flex;
+    height: calc(100vh - 60px);
+    /* Navbar only */
+    background-color: white;
+}
+
+.container {
+    padding: 50px 30px;
+    width: 100%;
+}
+
+p {
+    color: black;
+}
+
+.card {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+p {
+    font-size: 30px;
+}
+
+span {
+    font-size: 50px;
+}
+
+.chart-row {
+    display: flex;
+    gap: 2rem;
+    // flex: 2;
+}
+
+.chart-box {
+    flex: 1;
+    border-radius: 10px;
+    padding: 1rem;
+}

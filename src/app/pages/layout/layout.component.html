@@ -1,0 +1,26 @@
+<div class="container">
+    <section>
+        <ng-content select="[toolbar]"></ng-content>
+    </section>
+
+    <table class="table">
+        <thead class="header-container">
+            <ng-content select="[header]"></ng-content>
+        </thead>
+
+        <tbody>
+            <ng-container *ngFor="let item of data">
+                <ng-content *ngTemplateOutlet="rowTemplate; context: { $implicit: item }"></ng-content>
+            </ng-container>
+        </tbody>
+
+        <tfoot class="footer-container">
+            <tr class="footer-row">
+                <ng-content select="[header-item]"></ng-content>
+            </tr>
+        </tfoot>
+    </table>
+    <section>
+        <ng-content select="[taskbar]"></ng-content>
+    </section>
+</div>

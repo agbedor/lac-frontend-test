@@ -1,0 +1,119 @@
+<mat-stepper orientation="horizontal" [linear]="isLinear" #stepper>
+    <!-- Welcome Step (Non-linear) -->
+    <mat-step>
+        <ng-template matStepLabel>Welcome</ng-template>
+        <p class="entiti">Welcome to LEGAL AID COMMISION</p>
+        <p>
+            you're about to fill a form to take action for an approved legal case. You are required to add the
+            following entities:
+        </p>
+        <p class="entities">ACTION TAKEN</p>
+        <p class="entities">APPOINTMENT DATE</p>
+        <p class="entities">APPOINTMENT TIME</p>
+        <p class="entities">MEDIATOR</p>
+        <p class="entities">REMARKS</p>
+
+        <P class="entitie">NB: Fields with * are compulsory</P>
+        <P>You may cancel this form any time.</P>
+        <P>Follow the next steps if you wish to continue.</P>
+        <div>
+            <button mat-button (click)="cancel()" class="cancel">Cancel</button>
+            <button mat-button matStepperNext class="next">Next</button>
+        </div>
+    </mat-step>
+
+    <!-- Details Step (Linear) -->
+    <mat-step [stepControl]="actionFormGroup">
+        <form [formGroup]="actionFormGroup">
+            <ng-template matStepLabel>Details</ng-template>
+
+            <h3>Action Details</h3>
+            {{ data.case.id }}
+            <!-- Row 1 -->
+            <div class="form-row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Action Taken</mat-label>
+                    <textarea matInput formControlName="actionTakenCtrl" type="text"
+                        placeholder="fuck this case"></textarea>
+                </mat-form-field>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="form-row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Appointment Date</mat-label>
+                    <input readonly matInput [matDatepicker]="aptDatePicker" formControlName="dateCtrl"
+                        [min]="tomorrow" />
+                    <mat-datepicker-toggle matSuffix [for]="aptDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #aptDatePicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Enter time (HH:mm)</mat-label>
+                    <input matInput placeholder="00:00" formControlName="timeCtrl" mask="00:00"
+                        [dropSpecialCharacters]="false" (blur)="validateTimeInput()" />
+                    <mat-error *ngIf="actionFormGroup.get('timeCtrl')?.hasError('required')">
+                        Time is required
+                    </mat-error>
+                    <mat-error *ngIf="actionFormGroup.get('timeCtrl')?.hasError('invalidTime')">
+                        Time must be between 00:00 and 23:59
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="form-row">
+                <mat-form-field>
+                    <mat-label>Select Mediator</mat-label>
+                    <select matNativeControl required formControlName="mediatorCtrl">
+                        <option [ngValue]="null">-- select mediator --</option>
+                        <option *ngFor="let med of mediators()" [ngValue]="med">
+                            {{ med.first_name }} {{ med.last_name }}
+                        </option>
+                    </select>
+                </mat-form-field>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="form-row">
+                <mat-form-field appearance="outline">
+                    <mat-label>Remarks</mat-label>
+                    <textarea matInput formControlName="remarksCtrl" type="text"
+                        placeholder="fuck this case"></textarea>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <button mat-button (click)="cancel()" class="cancel">Cancel</button>
+                <button mat-button matStepperPrevious class="back">Back</button>
+                <button mat-button (click)="goToNextStep(actionFormGroup, stepper)" class="next">
+                    Next
+                </button>
+            </div>
+        </form>
+    </mat-step>
+
+    <!-- Confirm Step -->
+    <mat-step>
+        <ng-template matStepLabel>Confirm</ng-template>
+        <h2>Review Your Information</h2>
+
+        <h3>Details</h3>
+        <p>action taken: {{ actionFormGroup.value.actionTakenCtrl }}</p>
+        <p>appointment date: {{ actionFormGroup.value.dateCtrl }}</p>
+        <p>appointment time: {{ actionFormGroup.value.timeCtrl || 'null' }}:00</p>
+        <p>mediator name: {{ actionFormGroup.value.mediatorCtrl?.first_name }}</p>
+        <p>remarks: {{ actionFormGroup.value.remarksCtrl }}</p>
+
+        <div>
+            <button mat-button (click)="cancel()" class="cancel">Cancel</button>
+            <button mat-button matStepperPrevious class="back">Back</button>
+            <button mat-button (click)="submit()" class="next">
+                <ng-container *ngIf="!loading">Submit</ng-container>
+                <ng-container *ngIf="loading">
+                    <mat-spinner diameter="20" color="primary"></mat-spinner>
+                </ng-container>
+            </button>
+            <mat-progress-bar *ngIf="loading" mode="buffer" color="primary"></mat-progress-bar>
+        </div>
+    </mat-step>
+</mat-stepper>
