@@ -4,11 +4,12 @@ import { ApplicationService } from '../../../services/application.service';
 import { CaseService } from '../../../services/case.service';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [BaseChartDirective,FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

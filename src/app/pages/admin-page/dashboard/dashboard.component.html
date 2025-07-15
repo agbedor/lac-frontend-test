@@ -1,141 +1,135 @@
 <div class="container">
-    <section class="head">
+    <!-- <section class="head">
         <h2>Overview</h2>
         <p>July 14th 2025</p>
+    </section> -->
+    <section toolbar class="tb">
+        <div class="dd">
+            <div class="dropdown-group">
+                <label class="dropdown-label">Applications</label>
+                <div class="custom-select-wrapper" matTooltip="filter date created">
+                    <span class="icon fa-solid fa-file-alt"></span>
+                    <!-- <input type="date" /> -->
+                    <select>
+                        <option [ngValue]="null">status</option>
+                        <!-- <option *ngFor="let empsta of employmentstatus()" [ngValue]="empsta">
+                  {{ empsta.name }}
+                </option> -->
+                    </select>
+                    <span class="arrow material-icons">expand_more</span>
+                </div>
+            </div>
+            <div class="dropdown-group">
+                <label class="dropdown-label">Cases</label>
+                <div class="custom-select-wrapper" matTooltip="filter marital status">
+                    <span class="icon fa-solid fa-briefcase"></span>
+                    <select>
+                        <option [ngValue]="null">status</option>
+                        <!-- <option *ngFor="let masta of maritalstatus()" [ngValue]="masta">
+                  {{ masta.name }}
+                </option> -->
+                    </select>
+                    <span class="arrow material-icons">expand_more</span>
+                </div>
+            </div>
+            <div class="dropdown-group">
+                <label class="dropdown-label">Actions</label>
+                <div class="custom-select-wrapper" matTooltip="filter employment status">
+                    <span class="icon fa-solid fa-tasks"></span>
+                    <select>
+                        <option [ngValue]="null">status</option>
+                        <!-- <option *ngFor="let empsta of employmentstatus()" [ngValue]="empsta">
+                  {{ empsta.name }}
+                </option> -->
+                    </select>
+                    <span class="arrow material-icons">expand_more</span>
+                </div>
+            </div>
+            <div class="dropdown-group">
+                <label class="dropdown-label">Date Created</label>
+                <div class="custom-select-wrapper" matTooltip="filter marital status">
+                    <span class="icon fa-regular fa-calendar-days"></span>
+                    <select>
+                        <option [ngValue]="null">Filter All</option>
+                        <!-- <option *ngFor="let masta of maritalstatus()" [ngValue]="masta">
+                  {{ masta.name }}
+                </option> -->
+                    </select>
+                    <span class="arrow material-icons">expand_more</span>
+                </div>
+            </div>
+        </div>
+        <div class="bn">
+
+            <button class="btn" matTooltip="export to excel">
+                Export To Excel
+            </button>
+        </div>
     </section>
+    <!-- <section class="idk">
+
+    </section> -->
     <section class="one">
-        <div class="cards">
+        <!-- <div class="cards">
             <div class="card-header">
-                <span class="title">Applications <span class="subtitle">/ Total</span></span>
-                <!-- <span class="icon">📊</span> -->
+                <span class="jon fa-regular fa-calendar-days"><span class="title"> Applications</span></span>
+                <span class="subtitle">Last 30 days</span>
             </div>
             <div class="card-body">
                 <h2>{{ applicationCount() }}</h2>
-                <p class="change negative">▼ 18% <span>last week</span></p>
             </div>
             <div class="card-footer">
-                <div class="chart"></div>
-                <span class="percentage">18%</span>
+                <p class="subtitle">vs. 7120,14 Last Period</p>
             </div>
+        </div> -->
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Applications <span class="atitle">/ Accepted</span></span>
+                <span class="subtitle">Last 30 days</span>
+            </div>
+            <div class="card-body">
+                <h2>{{ applicationCount() }}</h2>
+            </div>
+            <!-- <div class="card-footer">
+                <p class="subtitle">vs. 7120,14 Last Period</p>
+            </div> -->
         </div>
         <div class="cards">
             <div class="card-header">
-                <span class="title">Cases <span class="subtitle">/ Day</span></span>
-                <!-- <span class="icon">📊</span> -->
+                <span class="title">Cases <span class="atitle">/ Accepted</span></span>
+                <span class="subtitle">Last 30 days</span>
             </div>
             <div class="card-body">
                 <h2>{{ caseCount() }}</h2>
-                <p class="change pos">▼ 18% <span>last week</span></p>
             </div>
-            <div class="card-footer">
-                <div class="chart"></div>
-                <span class="percentage">18%</span>
-            </div>
+            <!-- <div class="card-footer">
+                <p class="subtitle">vs. 7120,14 Last Period</p>
+            </div> -->
         </div>
         <div class="cards">
             <div class="card-header">
-                <span class="title">Actions <span class="subtitle">/ Week</span></span>
-                <!-- <span class="icon">📊</span> -->
+                <span class="title">Actions <span class="atitle">/ Pending</span></span>
+                <span class="subtitle">Last 30 days</span>
             </div>
             <div class="card-body">
                 <h2>{{ actionCount() }}</h2>
-                <p class="change negative">▼ 18% <span>last week</span></p>
             </div>
-            <div class="card-footer">
-                <div class="chart"></div>
-                <span class="percentage">18%</span>
-            </div>
+            <!-- <div class="card-footer">
+                <p class="subtitle">vs. 7120,14 Last Period</p>
+            </div> -->
         </div>
         <div class="cards">
             <div class="card-header">
-                <span class="title">Applications <span class="subtitle">/ Day</span></span>
-                <!-- <span class="icon">📊</span> -->
+                <span class="title">Applications <span class="atitle">/ Action Taken</span></span>
+                <span class="subtitle">Last 30 days</span>
             </div>
             <div class="card-body">
                 <h2>{{ applicationCount() }}</h2>
-                <p class="change pos">▼ 18% <span>last week</span></p>
             </div>
-            <div class="card-footer">
-                <div class="chart"></div>
-                <span class="percentage">18%</span>
-            </div>
+            <!-- <div class="card-footer">
+                <p class="subtitle">vs. 7120,14 Last Period</p>
+            </div> -->
         </div>
-        <!-- <div class="card">
-            <div class="card-header">
-                <span class="title">Cases <span class="subtitle">/ Day</span></span>
-            </div>
-            <div class="card-body">
-                <h2>{{ caseCount() }}</h2>
-                <p class="change negative">+18% <span>25 last week</span></p>
-            </div>
-        </div> -->
-    </section>
-    <section class="one">
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Applications <span class="subtitle">/ Rejected</span></span>
-                <!-- <span class="icon">📊</span> -->
-            </div>
-            <div class="card-body">
-                <h2>{{ applicationCount() }}</h2>
-                <p class="change pos">▼ 18% <span>last week</span></p>
-            </div>
-            <div class="card-footer">
-                <div class="chart"></div>
-                <span class="percentage">18%</span>
-            </div>
-        </div>
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Cases <span class="subtitle">/ Accepted</span></span>
-                <!-- <span class="icon">📊</span> -->
-            </div>
-            <div class="card-body">
-                <h2>{{ caseCount() }}</h2>
-                <p class="change negative">▼ 18% <span>last week</span></p>
-            </div>
-            <div class="card-footer">
-                <div class="chart"></div>
-                <span class="percentage">18%</span>
-            </div>
-        </div>
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Actions <span class="subtitle">/ Pending</span></span>
-                <!-- <span class="icon">📊</span> -->
-            </div>
-            <div class="card-body">
-                <h2>{{ actionCount() }}</h2>
-                <p class="change pos">▼ 18% <span>last week</span></p>
-            </div>
-            <div class="card-footer">
-                <div class="chart"></div>
-                <span class="percentage">18%</span>
-            </div>
-        </div>
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Applications <span class="subtitle">/ Action Taken</span></span>
-                <!-- <span class="icon">📊</span> -->
-            </div>
-            <div class="card-body">
-                <h2>{{ applicationCount() }}</h2>
-                <p class="change negative">▼ 18% <span>last week</span></p>
-            </div>
-            <div class="card-footer">
-                <div class="chart"></div>
-                <span class="percentage">18%</span>
-            </div>
-        </div>
-        <!-- <div class="card">
-            <div class="card-header">
-                <span class="title">Cases <span class="subtitle">/ Day</span></span>
-            </div>
-            <div class="card-body">
-                <h2>{{ caseCount() }}</h2>
-                <p class="change negative">+18% <span>25 last week</span></p>
-            </div>
-        </div> -->
     </section>
     <!-- <section class="chart-row">
         <div class="chart-box">

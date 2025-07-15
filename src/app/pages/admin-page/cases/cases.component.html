@@ -1,32 +1,4 @@
 <app-layout [data]="displayedCases()" [rowTemplate]="caseRow">
-  <!-- <section toolbar class="toolbar" [ngClass]="{ 'expanded': searchMode }"> -->
-  <!-- Filter Menu -->
-  <!-- <button *ngIf="!searchMode" [matMenuTriggerFor]="statusMenu">
-      <div class="circle" matTooltip="select filter option"><i class="fa-solid fa-filter"></i></div>
-    </button>
-
-    <mat-menu #statusMenu="matMenu">
-      <button mat-menu-item (click)="filterCases('all')">All</button>
-      <button mat-menu-item (click)="filterCases('pending')">Pending</button>
-      <button mat-menu-item (click)="filterCases('action taken')">Action Taken</button>
-    </mat-menu> -->
-
-  <!-- Download -->
-  <!-- <button *ngIf="!searchMode">
-      <div class="circle" matTooltip="export to excel"><i class="fa-solid fa-download"></i></div>
-    </button> -->
-
-  <!-- Search button -->
-  <!-- <button *ngIf="!searchMode" (click)="toggleSearch()">
-      <div class="circle" matTooltip="search"><i class="fa-solid fa-magnifying-glass"></i></div>
-    </button> -->
-
-  <!-- Search input -->
-  <!-- <input *ngIf="searchMode" #inputRef type="text"
-      placeholder="Search by case id, case relation, case type, created at" class="search-input"
-      (input)="onSearch($event)" (blur)="toggleSearch(inputRef)" autofocus />
-  </section> -->
-
   <section toolbar class="tb">
     <div class="dd">
       <div class="dropdown-group">
