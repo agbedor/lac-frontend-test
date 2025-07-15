@@ -1,24 +1,7 @@
 <app-layout [data]="displayedCases()" [rowTemplate]="caseRow">
-  <!-- Toolbar -->
-  <!-- <section toolbar class="toolbar">
-    <button [matMenuTriggerFor]="statusMenu">
-      <div class="circle"><i class="fa-solid fa-filter"></i></div>
-    </button>
-    <mat-menu #statusMenu="matMenu">
-      <button mat-menu-item (click)="filterCases('all')">All</button>
-      <button mat-menu-item (click)="filterCases('pending')">Pending</button>
-      <button mat-menu-item (click)="filterCases('action taken')">Action Taken</button>
-    </mat-menu>
-    <button>
-      <div class="circle"><i class="fa-solid fa-download"></i></div>
-    </button>
-    <button>
-      <div class="circle"><i class="fa-solid fa-magnifying-glass"></i></div>
-    </button>
-  </section> -->
-  <section toolbar class="toolbar" [ngClass]="{ 'expanded': searchMode }">
-    <!-- Filter Menu -->
-    <button *ngIf="!searchMode" [matMenuTriggerFor]="statusMenu">
+  <!-- <section toolbar class="toolbar" [ngClass]="{ 'expanded': searchMode }"> -->
+  <!-- Filter Menu -->
+  <!-- <button *ngIf="!searchMode" [matMenuTriggerFor]="statusMenu">
       <div class="circle" matTooltip="select filter option"><i class="fa-solid fa-filter"></i></div>
     </button>
 
@@ -26,23 +9,80 @@
       <button mat-menu-item (click)="filterCases('all')">All</button>
       <button mat-menu-item (click)="filterCases('pending')">Pending</button>
       <button mat-menu-item (click)="filterCases('action taken')">Action Taken</button>
-    </mat-menu>
+    </mat-menu> -->
 
-    <!-- Download -->
-    <button *ngIf="!searchMode">
+  <!-- Download -->
+  <!-- <button *ngIf="!searchMode">
       <div class="circle" matTooltip="export to excel"><i class="fa-solid fa-download"></i></div>
-    </button>
+    </button> -->
 
-    <!-- Search button -->
-    <button *ngIf="!searchMode" (click)="toggleSearch()">
+  <!-- Search button -->
+  <!-- <button *ngIf="!searchMode" (click)="toggleSearch()">
       <div class="circle" matTooltip="search"><i class="fa-solid fa-magnifying-glass"></i></div>
-    </button>
+    </button> -->
 
-    <!-- Search input -->
-    <input *ngIf="searchMode" #inputRef type="text"
+  <!-- Search input -->
+  <!-- <input *ngIf="searchMode" #inputRef type="text"
       placeholder="Search by case id, case relation, case type, created at" class="search-input"
       (input)="onSearch($event)" (blur)="toggleSearch(inputRef)" autofocus />
+  </section> -->
+
+  <section toolbar class="tb">
+    <div class="dd">
+      <div class="dropdown-group">
+        <label class="dropdown-label">Case Status</label>
+        <div class="custom-select-wrapper" matTooltip="filter date created">
+          <span class="icon fa-solid fa-spinner fa-spin"></span>
+          <select>
+            <option [ngValue]="null">case status</option>
+            <option *ngFor="let casetype of casetypes()" [ngValue]="casetype">
+              {{ casetype.name }}
+            </option>
+          </select>
+          <span class="arrow material-icons">expand_more</span>
+        </div>
+      </div>
+      <div class="dropdown-group">
+        <label class="dropdown-label">Case Relation</label>
+        <div class="custom-select-wrapper" matTooltip="filter marital status">
+          <span class="icon fa-solid fa-handshake"></span>
+          <select>
+            <option [ngValue]="null">case relation</option>
+            <option *ngFor="let caserela of parties()" [ngValue]="caserela">
+              {{ caserela.name }}
+            </option>
+          </select>
+          <span class="arrow material-icons">expand_more</span>
+        </div>
+      </div>
+      <div class="dropdown-group">
+        <label class="dropdown-label">Case Type</label>
+        <div class="custom-select-wrapper" matTooltip="filter date created">
+          <span class="icon fa-solid fa-scale-balanced"></span>
+          <select>
+            <option [ngValue]="null">case type</option>
+            <option *ngFor="let casetype of casetypes()" [ngValue]="casetype">
+              {{ casetype.name }}
+            </option>
+          </select>
+          <span class="arrow material-icons">expand_more</span>
+        </div>
+      </div>
+      <div class="dropdown-group">
+        <label class="dropdown-label">Search</label>
+        <div class="search">
+          <input #inputRef type="text" placeholder="Search by case id, opposition name" class="search-input" autofocus
+            (input)="onSearch($event)" />
+        </div>
+      </div>
+    </div>
+    <div class="bn">
+      <button class="btn" matTooltip="export to excel">
+        Export To Excel
+      </button>
+    </div>
   </section>
+
 
   <!-- Header -->
   <tr header class="header-row">
@@ -51,7 +91,7 @@
     <td class="header-item">Case Relation</td>
     <td class="header-item">Case Type</td>
     <td class="header-item">Main Charge</td>
-    <td class="header-item">Case Summary</td>
+    <!-- <td class="header-item">Case Summary</td> -->
     <td class="header-item">Opposition Name</td>
     <td class="header-item">Actions</td>
   </tr>
@@ -81,7 +121,7 @@
             <td>{{ case.case_relation?.name }}</td>
             <td>{{ case.case_type?.name }}</td>
             <td class="sub">{{ case.main_charge }}</td>
-            <td>{{ case.case_summary }}</td>
+            <!-- <td>{{ case.case_summary }}</td> -->
             <td>{{ case.opponent?.first_name }} {{ case.opponent?.last_name }}</td>
             <td>
               <!-- <button class="elip" (click)="case.status === 'pending' && createDialog(case)">

@@ -1,203 +1,186 @@
-/* toolbar */
-.toolbar {
-  width: 150px;
-  /* Set width to 80 */
-  height: 40px;
-  /* Set height to 50 */
-  background-color: white;
-  /* Set background color to black */
-  border-radius: 20px;
-  /* Set border radius to 5px */
-  display: flex;
-  /* Center any content (if needed) */
-  align-items: center;
-  /* Vertically center content */
-  justify-content: space-evenly;
-  /* Horizontally center content */
-  /* margin: 20px auto; */
-  /* Center the box in the middle of the page horizontally */
-  border: 1px solid rgba(223, 223, 223, 255);
-  /* Set border color to red with a thickness of 2px */
-}
+  /* header */
+  .header-item {
+    color: gray;
+    font-size: 20px;
+  }
 
-.toolbar.expanded {
-  width: 300px;
-  padding: 0 10px;
-}
+  .header-row {
+    align-items: center;
+    /* Vertical centering */
+    height: 100%;
+    /* padding-right: 60px; */
+  }
 
-.search-input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  width: 100%;
-  padding: 4px 8px;
-  background: transparent;
-}
+  /* body */
+  .body-row {
+    color: black;
+    flex: 1;
+    font-size: 20px;
+    /* text-align: left; */
+  }
 
-button {
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-}
+  .body-container {
+    height: 40px;
+    border: 1px solid rgba(223, 223, 223, 1);
+    border-bottom: 0px;
+    display: flex;
+    align-items: center;
+    padding-left: 60px;
+  }
 
-.circle i {
-  color: white;
-}
+  .body-row td {
+    text-align: left;
+    /* border-right: 1px solid #f0f0f0; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-.circle {
-  width: 28px;
-  height: 28px;
-  background-color: black;
-  /* Circle color */
-  border-radius: 50%;
-  /* Makes it a perfect circle */
-  display: flex;
-  /* Flexbox to center the icon */
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  /* Add pointer cursor on hover */
-  transition: transform 0.2s ease-in-out;
-  /* Add a smooth hover effect */
-}
+  .elip {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    outline: none;
+    cursor: pointer;
+  }
 
-.circle:hover {
-  transform: scale(1.1);
-  /* Slightly enlarge on hover */
-}
+  .elip i {
+    color: blue;
+    font-size: 17px;
+  }
 
-/* header */
-.header-item {
-  color: gray;
-  font-size: 20px;
-}
+  .elip:hover {
+    transform: scale(1.2);
+  }
 
-.header-row {
-  align-items: center;
-  /* Vertical centering */
-  height: 100%;
-  /* padding-right: 60px; */
-}
+  /* Table structure */
+  .header-row,
+  .body-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    /* Adjust ratios as needed */
+  }
 
-/* body */
-.body-row {
-  color: black;
-  flex: 1;
-  font-size: 20px;
-  /* text-align: left; */
-}
+  .sub {
+    color: blue;
+  }
 
-.body-container {
-  height: 40px;
-  border: 1px solid rgba(223, 223, 223, 1);
-  border-bottom: 0px;
-  display: flex;
-  align-items: center;
-  padding-left: 60px;
-}
+  .red {
+    color: red;
+  }
 
-.body-row td {
-  text-align: left;
-  /* border-right: 1px solid #f0f0f0; */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .dropdown-label {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: block;
+    color: gray;
+  }
 
-.elip {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  box-shadow: none;
-  outline: none;
-  cursor: pointer;
-}
+  .tb {
+    display: flex;
+    justify-content: space-between;
+    // background-color: green;
+  }
 
-.elip i {
-  color: blue;
-  font-size: 17px;
-}
+  .dd {
+    display: flex;
+    gap: 20px;
+  }
 
-.elip:hover {
-  transform: scale(1.2);
-}
+  .bn {
+    display: flex;
+    gap: 20px;
+  }
 
-/* Table structure */
-.header-row,
-.body-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
-  /* Adjust ratios as needed */
-}
+  .dg,
+  .dropdown-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    /* or whatever vertical space you want between label & dropdown */
+  }
 
-.sub {
-  color: blue;
-}
+  .custom-select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 6px 12px;
+    width: 150px;
+    background-color: #fff;
+  }
 
-.ac {
-  color: green;
-  font-weight: 500;
-}
+  .custom-select-wrapper select {
+    appearance: none;
+    border: none;
+    outline: none;
+    padding: 6px 0 6px 32px;
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+    cursor: pointer;
+  }
 
-.gre {
-  color: red;
-}
+  .icon {
+    position: absolute;
+    left: 10px;
+    color: #555;
+    font-size: 20px;
+  }
 
-.taskbar {
-  width: 350px;
-  height: 40px;
-  background-color: white;
-  border-radius: 20px;
-  border: 1px solid rgba(223, 223, 223, 255);
-  display: flex;
-  align-items: center;
-  /* Vertically centers all items */
-  justify-content: space-evenly;
-  /* Evenly spaces items horizontally */
-}
+  .arrow {
+    position: absolute;
+    right: 10px;
+    color: #555;
+    pointer-events: none;
+  }
 
-.taskbar p {
-  color: black;
-  font-size: 20px;
-  margin: 0;
-  /* Removes default paragraph margins */
-  display: flex;
-  align-items: center;
-  /* Ensures text is vertically centered */
-}
 
-.taskbar button {
-  display: flex;
-  align-items: center;
-  /* Centers icon vertically inside button */
-  justify-content: center;
-  /* Centers icon horizontally inside button */
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
-  /* Removes default button padding */
-}
+  .search-input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 250px;
+    padding: 4px 8px;
+    background: transparent;
+  }
 
-// .loading-text {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   text-align: center;
-//   margin: 0.1rem auto;
-//   font-style: italic;
-//   color: black;
-//   // font-size: 30px;
-// }
+  .search {
+    width: 250px;
+    /* Set width to 80 */
+    height: 40px;
+    /* Set height to 50 */
+    background-color: white;
+    /* Set background color to black */
+    border-radius: 10px;
+    /* Set border radius to 5px */
+    display: flex;
+    /* Center any content (if needed) */
+    align-items: center;
+    /* Vertically center content */
+    justify-content: space-evenly;
+    /* Horizontally center content */
+    /* margin: 20px auto; */
+    /* Center the box in the middle of the page horizontally */
+    border: 1px solid #ccc;
+  }
 
-// .black-bar .mat-progress-bar-fill::after,
-// .black-bar .mat-progress-bar-buffer {
-//   background-color: black !important;
-// }
-
-// .no-data {
-//   text-align: center;
-//   color: black;
-//   font-style: italic;
-// }
+  .btn {
+    background-color: black;
+    /* Bootstrap blue */
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    // padding: 4px 8px;
+    margin-top: 30px;
+    width: 110px;
+    border: none;
+    border-radius: 10px;
+    // height: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }

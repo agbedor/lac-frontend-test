@@ -20,64 +20,6 @@ export class DashboardComponent {
   caseCount = this.caseService.caseCount;
   actionCount = this.actionService.actionCount;
 
-  ngOnInit() {
-    this.applicationService.loadApplicantCount();
-    this.actionService.loadActionCount();
-    this.caseService.loadCaseCount();
-  }
-
-  pieChartData = {
-    labels: ['Red', 'Green', 'Blue'],
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: [30, 50, 20],
-        backgroundColor: [
-          'rgb(245, 49, 49)',
-          'rgb(0, 158, 0)',
-          'rgb(51, 51, 222)',
-        ],
-      },
-    ],
-  };
-
-  pieChartOptions: ChartOptions<'pie'> = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'bottom',
-      },
-    },
-  };
-
-  public scatterChartData: ChartConfiguration<'scatter'>['data'] = {
-    datasets: [
-      {
-        label: 'Scatter Dataset',
-        data: [
-          { x: -10, y: 0 },
-          { x: 0, y: 10 },
-          { x: 10, y: 5 },
-          { x: 0.5, y: 5.5 },
-        ],
-        backgroundColor: 'rgb(255, 99, 132)',
-      },
-    ],
-  };
-
-  public scatterChartOptions: ChartConfiguration<'scatter'>['options'] = {
-    responsive: true,
-    scales: {
-      x: {
-        type: 'linear',
-        position: 'bottom',
-      },
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
-
   public horizontalBarChartData: ChartConfiguration<'bar'>['data'] = {
     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [
@@ -112,31 +54,9 @@ export class DashboardComponent {
     },
   };
 
-  bubbleChartData = {
-    datasets: [
-      {
-        label: 'Applications',
-        data: [{ x: 10, y: 20, r: 15 }],
-        backgroundColor: 'rgba(245, 49, 49, 0.5)',
-      },
-      {
-        label: 'Cases',
-        data: [{ x: 15, y: 10, r: 10 }],
-        backgroundColor: 'rgba(0, 158, 0, 0.5)',
-      },
-      {
-        label: 'Actions',
-        data: [{ x: 5, y: 25, r: 12 }],
-        backgroundColor: 'rgba(51, 51, 222, 0.5)',
-      },
-    ],
-  };
-
-  bubbleChartOptions = {
-    responsive: true,
-    scales: {
-      x: { beginAtZero: true },
-      y: { beginAtZero: true },
-    },
-  };
+  ngOnInit() {
+    this.applicationService.loadApplicantCount();
+    this.actionService.loadActionCount();
+    this.caseService.loadCaseCount();
+  }
 }

@@ -15,6 +15,8 @@ import {
   catchError,
 } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { MediatorService } from '../../../services/mediator.service';
 
 @Component({
   selector: 'app-actions',
@@ -27,6 +29,7 @@ import { of } from 'rxjs';
     MatDialogModule,
     MatProgressBarModule,
     MatTooltipModule,
+    FormsModule,
   ],
   templateUrl: './actions.component.html',
   styleUrl: './actions.component.scss',
@@ -44,6 +47,8 @@ export class ActionsComponent {
   isSearchEnabled = true;
   searchMode = false;
   searchSubject = new BehaviorSubject<string>(''); // BehaviorSubject instead of Subject
+  private mediatorService = inject(MediatorService);
+  mediators = this.mediatorService.mediators;
 
   displayedActions() {
     if (this.loading()) {
@@ -88,23 +93,14 @@ export class ActionsComponent {
   }
 
   onSearch(event: Event) {
-    if (!this.searchMode) return;
     const input = event.target as HTMLInputElement;
     const term = input.value;
     this.searchSubject.next(term);
   }
 
-  toggleSearch(input?: HTMLInputElement) {
-    if (this.searchMode && input) {
-      input.value = '';
-      this.searchSubject.next('');
-      this.actionService.loadActions(); // hard reset
-    }
-    this.searchMode = !this.searchMode;
-  }
-
   ngOnInit() {
     this.actionService.loadActions();
     this.actionService.loadActionCount();
+    this.mediatorService.loadMediators();
   }
 }

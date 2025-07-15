@@ -1,59 +1,69 @@
 <app-layout [data]="displayedActions()" [rowTemplate]="actionRow">
-    <!-- <section toolbar class="toolbar">
-        <button>
-            <div class="circle">
-                <i class="fa-solid fa-add"></i>
+    <section toolbar class="tb">
+        <div class="dd">
+            <div class="dropdown-group">
+                <label class="dropdown-label">Appointment Date</label>
+                <div class="custom-select-wrapper" matTooltip="filter appointment date">
+                    <span class="icon fa-regular fa-calendar-days"></span>
+                    <select>
+                        <option [ngValue]="null">appointment date</option>
+                        <!-- <option *ngFor="let empsta of employmentstatus()" [ngValue]="empsta">
+                            {{ empsta.name }}
+                        </option> -->
+                    </select>
+                    <span class="arrow material-icons">expand_more</span>
+                </div>
             </div>
-        </button>
-        <button>
-            <div class="circle">
-                <i class="fa-solid fa-download"></i>
+            <div class="dropdown-group">
+                <label class="dropdown-label">Completed By</label>
+                <div class="custom-select-wrapper" matTooltip="filter completed by">
+                    <span class="icon fa-solid fa-user-tie"></span>
+                    <select>
+                        <option [ngValue]="null">completed by</option>
+                        <option *ngFor="let masta of mediators()" [ngValue]="masta">
+                            {{ masta.first_name }} {{ masta.last_name }}
+                        </option>
+                    </select>
+                    <span class="arrow material-icons">expand_more</span>
+                </div>
             </div>
-        </button>
-        <button>
-            <div class="circle">
-                <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="dropdown-group">
+                <label class="dropdown-label">Mediator</label>
+                <div class="custom-select-wrapper" matTooltip="filter dediator">
+                    <span class="icon fa-solid fa-user-tie"></span>
+                    <select>
+                        <option [ngValue]="null">mediator</option>
+                        <option *ngFor="let empsta of mediators()" [ngValue]="empsta">
+                            {{ empsta.first_name }} {{ empsta.last_name }}
+                        </option>
+                    </select>
+                    <span class="arrow material-icons">expand_more</span>
+                </div>
             </div>
-        </button>
-    </section> -->
-
-    <section toolbar class="toolbar" [ngClass]="{ 'expanded': searchMode }">
-        <!-- Filter Menu -->
-        <button *ngIf="!searchMode">
-            <div class="circle" matTooltip="select filter options"><i class="fa-solid fa-filter"></i></div>
-        </button>
-
-        <!-- <mat-menu #statusMenu="matMenu">
-          <button mat-menu-item (click)="filterCases('all')">All</button>
-          <button mat-menu-item (click)="filterCases('pending')">Pending</button>
-          <button mat-menu-item (click)="filterCases('action taken')">Action Taken</button>
-        </mat-menu> -->
-
-        <!-- Download -->
-        <button *ngIf="!searchMode">
-            <div class="circle" matTooltip="export to excel"><i class="fa-solid fa-download"></i></div>
-        </button>
-
-        <!-- Search button -->
-        <button *ngIf="!searchMode" (click)="toggleSearch()">
-            <div class="circle" matTooltip="search"><i class="fa-solid fa-magnifying-glass"></i></div>
-        </button>
-
-        <!-- Search input -->
-        <input *ngIf="searchMode" #inputRef type="text"
-            placeholder="Search by action id, completed by, mediator, appointment date" class="search-input"
-            (input)="onSearch($event)" (blur)="toggleSearch(inputRef)" autofocus />
+            <div class="dropdown-group">
+                <label class="dropdown-label">Search</label>
+                <div class="search">
+                    <input #inputRef type="text" placeholder="Search by action id, date created" class="search-input"
+                        autofocus (input)="onSearch($event)" />
+                </div>
+            </div>
+        </div>
+        <div class="bn">
+            <button class="btn" matTooltip="export to excel">
+                Export To Excel
+            </button>
+        </div>
     </section>
 
     <tr header class="header-row">
         <td class="header-item">Action Id</td>
-        <td class="header-item">Completed By</td>
         <td class="header-item">Case Id</td>
+        <td class="header-item">Completed By</td>
         <td class="header-item">Action Taken</td>
         <td class="header-item">Appointment Date</td>
         <td class="header-item">Appointment Time</td>
         <td class="header-item">Mediator Name</td>
-        <td class="header-item">Remarks</td>
+        <!-- <td class="header-item">Remarks</td> -->
         <!-- <td class="header-item">Created At</td> -->
         <td class="header-item">Actions</td>
     </tr>
@@ -71,14 +81,14 @@
                 <ng-container *ngIf="action?.id; else noData">
                     <tr class="body-row">
                         <td class="sub">{{ action.id }}</td>
+                        <td class="red">{{ action.case }}</td>
                         <td class="sub">{{ action.completed_by?.first_name }} {{ action.completed_by?.last_name }}
                         </td>
-                        <td class="gre">{{ action.case }}</td>
                         <td class="ac">{{ action.action_taken }}</td>
                         <td>{{ action.appointment_date }}</td>
                         <td>{{ action.appointment_time }}</td>
                         <td class="sub">{{ action.mediator?.first_name }} {{ action.mediator?.last_name }}</td>
-                        <td>{{ action.remarks }}</td>
+                        <!-- <td>{{ action.remarks }}</td> -->
                         <td>
                             <button class="elip" matTooltip="view more">
                                 <i class="fa-solid fa-ellipsis"></i>

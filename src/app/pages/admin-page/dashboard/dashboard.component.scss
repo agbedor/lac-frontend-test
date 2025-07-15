@@ -6,36 +6,305 @@
 }
 
 .container {
-    padding: 50px 30px;
+    padding: 10px 30px;
     width: 100%;
-}
-
-p {
-    color: black;
-}
-
-.card {
+    gap: 50px;
     display: flex;
-    justify-content: space-between;
-    flex: 1;
-}
+    flex-direction: column;
 
-p {
-    font-size: 30px;
-}
+    .head {
+        display: grid;
+        align-items: start;
+        /* Align content at the top */
+        justify-items: start;
+        /* Align items to the left */
+        // background-color: blue;
+        padding: 10px;
+        /* Optional: add some padding */
 
-span {
-    font-size: 50px;
-}
+        h2 {
+            color: black;
+            font-size: 50px;
+            font-weight: 300;
+            margin: 0;
+            /* Remove default margin */
+        }
 
-.chart-row {
-    display: flex;
-    gap: 2rem;
-    // flex: 2;
-}
+        p {
+            color: black;
+            margin: 0;
+            /* Remove default margin */
+            font-size: 16px;
+            /* Optional: adjust size */
+        }
+    }
 
-.chart-box {
-    flex: 1;
-    border-radius: 10px;
-    padding: 1rem;
+    .chart-row {
+        display: flex;
+        gap: 50px;
+    }
+    
+    .chart-box {
+        flex: 2;
+    }
+
+    .one {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        // .card {
+        //     height: 200px;
+        //     width: 400px;
+        //     border-radius: 15px;
+        //     border: 1px solid rgb(202, 199, 199);
+        // }
+        .card {
+            border: 1px solid rgb(209, 206, 206);
+            border-radius: 20px;
+            // padding-left: 20px;
+            width: 400px;
+            // height: 200px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            // gap: 12px;
+
+            h2 {
+                color: black;
+                font-size: 70px;
+                font-weight: 500;
+            }
+
+            .title {
+                font-size: 20px;
+                font-weight: 500;
+            }
+
+            .card-header {
+                // display: flex;
+                // justify-content: space-between;
+                font-size: 14px;
+                color: #555;
+            }
+
+            .subtitle {
+                color: #aaa;
+                font-weight: 400;
+            }
+
+            .change.negative {
+                color: rgb(32, 155, 32);
+                font-size: 20px;
+                /* Red for negative */
+            }
+
+            .change span {
+                color: #aaa;
+                margin-left: 4px;
+            }
+
+            .card-footer {
+                // display: flex;
+                // align-items: center;
+                // justify-content: space-between;
+            }
+        }
+
+        .cards {
+            border: 1px solid rgb(209, 206, 206);
+            border-radius: 20px;
+            padding: 20px;
+            width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-family: 'Inter', sans-serif;
+
+            h2 {
+                color: black;
+            }
+
+            .title {
+                font-size: 20px;
+            }
+
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                color: #555;
+            }
+
+            .card-header .title {
+                font-weight: 600;
+            }
+
+            .subtitle {
+                color: #aaa;
+                font-weight: 400;
+            }
+
+            .card-body h2 {
+                font-size: 28px;
+                margin: 0;
+                font-weight: 700;
+            }
+
+            .change {
+                font-size: 14px;
+                margin-top: 6px;
+            }
+
+            .change.negative {
+                color: #e74c3c;
+                /* Red for negative */
+            }
+
+            .change.pos {
+                color: rgb(36, 151, 36);
+                /* Red for negative */
+            }
+
+            .change span {
+                color: #aaa;
+                margin-left: 4px;
+            }
+
+            .card-footer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+
+            .chart {
+                width: 80px;
+                height: 40px;
+                background: url('data:image/svg+xml;utf8,<svg width="80" height="40" xmlns="http://www.w3.org/2000/svg"><polyline points="0,30 20,20 40,25 60,15 80,18" fill="none" stroke="%23f4a261" stroke-width="2"/></svg>') no-repeat center;
+            }
+
+            .percentage {
+                font-size: 14px;
+                color: #f4a261;
+                font-weight: 600;
+            }
+        }
+
+    }
+
+    .tb {
+        display: flex;
+        justify-content: space-between;
+
+        .dropdown-label {
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            display: block;
+            color: gray;
+        }
+
+        .dd {
+            display: flex;
+            gap: 20px;
+        }
+
+        .bn {
+            display: flex;
+            gap: 20px;
+        }
+
+        .dg,
+        .dropdown-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            /* or whatever vertical space you want between label & dropdown */
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 6px 12px;
+            width: 250px;
+            background-color: #fff;
+        }
+
+        .custom-select-wrapper select {
+            appearance: none;
+            border: none;
+            outline: none;
+            padding: 6px 0 6px 32px;
+            width: 100%;
+            font-size: 14px;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .icon {
+            position: absolute;
+            left: 10px;
+            color: #555;
+            font-size: 20px;
+        }
+
+        .arrow {
+            position: absolute;
+            right: 10px;
+            color: #555;
+            pointer-events: none;
+        }
+
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 14px;
+            width: 250px;
+            padding: 4px 8px;
+            background: transparent;
+        }
+
+        .search {
+            width: 250px;
+            /* Set width to 80 */
+            height: 40px;
+            /* Set height to 50 */
+            background-color: white;
+            /* Set background color to black */
+            border-radius: 10px;
+            /* Set border radius to 5px */
+            display: flex;
+            /* Center any content (if needed) */
+            align-items: center;
+            /* Vertically center content */
+            justify-content: space-evenly;
+            /* Horizontally center content */
+            /* margin: 20px auto; */
+            /* Center the box in the middle of the page horizontally */
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            background-color: black;
+            /* Bootstrap blue */
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            // padding: 4px 8px;
+            margin-top: 30px;
+            width: 110px;
+            border: none;
+            border-radius: 10px;
+            // height: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    }
 }

@@ -10,14 +10,16 @@ import { CaseModel } from '../../../models/case-model';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { BehaviorSubject, EMPTY, of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
   catchError,
-  filter,
 } from 'rxjs/operators';
+import { PartyService } from '../../../services/party.service';
+import { CaseTypeService } from '../../../services/case-type.service';
 
 @Component({
   selector: 'app-cases',
@@ -31,6 +33,7 @@ import {
     MatProgressBarModule,
     MatButtonModule,
     MatTooltipModule,
+    FormsModule
   ],
   templateUrl: './cases.component.html',
   styleUrl: './cases.component.scss',
@@ -38,6 +41,11 @@ import {
 export class CasesComponent {
   private dialog = inject(MatDialog);
   private caseService = inject(CaseService);
+  private casetypeService = inject(CaseTypeService);
+  private partyService = inject(PartyService);
+  casetypes = this.casetypeService.casetypes;
+  parties = this.partyService.parties;
+
   caseCount = this.caseService.caseCount;
   cases = this.caseService.cases;
   loading = this.caseService.loading;
@@ -59,14 +67,14 @@ export class CasesComponent {
   }
 
   // search
-  toggleSearch(input?: HTMLInputElement) {
-    if (this.searchMode) {
-      if (input) input.value = '';
-      this.searchSubject.next(''); // trigger reset through subject
-      this.caseService.loadCases(); // 👈 optional but good to force full reset
-    }
-    this.searchMode = !this.searchMode;
-  }
+  // toggleSearch(input?: HTMLInputElement) {
+  //   if (this.searchMode) {
+  //     if (input) input.value = '';
+  //     this.searchSubject.next(''); // trigger reset through subject
+  //     this.caseService.loadCases(); // 👈 optional but good to force full reset
+  //   }
+  //   this.searchMode = !this.searchMode;
+  // }
 
   constructor() {
     this.searchSubject
@@ -90,7 +98,7 @@ export class CasesComponent {
   }
 
   onSearch(event: Event) {
-    if (!this.searchMode) return; // ✅ prevent search if mode is off
+    // if (!this.searchMode) return; // ✅ prevent search if mode is off
 
     const input = event.target as HTMLInputElement;
     const term = input.value;
@@ -141,5 +149,7 @@ export class CasesComponent {
   ngOnInit() {
     this.caseService.loadCases();
     this.caseService.loadCaseCount();
+    this.partyService.loadParties();
+    this.casetypeService.loadCaseTypes();
   }
 }

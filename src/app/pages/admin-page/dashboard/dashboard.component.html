@@ -1,37 +1,146 @@
 <div class="container">
-    <h2>dashboard works</h2>
-    <!-- <section class="card">
-        <div>
-            <p style="color:rgb(245, 49, 49)">Applications</p>
-            <span style="color:white">{{ applicationCount() }}</span>
+    <section class="head">
+        <h2>Overview</h2>
+        <p>July 14th 2025</p>
+    </section>
+    <section class="one">
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Applications <span class="subtitle">/ Total</span></span>
+                <!-- <span class="icon">📊</span> -->
+            </div>
+            <div class="card-body">
+                <h2>{{ applicationCount() }}</h2>
+                <p class="change negative">▼ 18% <span>last week</span></p>
+            </div>
+            <div class="card-footer">
+                <div class="chart"></div>
+                <span class="percentage">18%</span>
+            </div>
         </div>
-        <div>
-            <p style="color:rgb(0, 158, 0)">Cases</p>
-            <span style="color:white">{{ caseCount() }}</span>
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Cases <span class="subtitle">/ Day</span></span>
+                <!-- <span class="icon">📊</span> -->
+            </div>
+            <div class="card-body">
+                <h2>{{ caseCount() }}</h2>
+                <p class="change pos">▼ 18% <span>last week</span></p>
+            </div>
+            <div class="card-footer">
+                <div class="chart"></div>
+                <span class="percentage">18%</span>
+            </div>
         </div>
-        <div>
-            <p style="color:rgb(51, 51, 222)">Actions</p>
-            <span style="color:white">{{ actionCount() }}</span>
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Actions <span class="subtitle">/ Week</span></span>
+                <!-- <span class="icon">📊</span> -->
+            </div>
+            <div class="card-body">
+                <h2>{{ actionCount() }}</h2>
+                <p class="change negative">▼ 18% <span>last week</span></p>
+            </div>
+            <div class="card-footer">
+                <div class="chart"></div>
+                <span class="percentage">18%</span>
+            </div>
         </div>
-        <div>
-            <p style="color:rgb(245, 49, 49)">Pending</p>
-            <span style="color:white">{{ applicationCount() }}</span>
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Applications <span class="subtitle">/ Day</span></span>
+                <!-- <span class="icon">📊</span> -->
+            </div>
+            <div class="card-body">
+                <h2>{{ applicationCount() }}</h2>
+                <p class="change pos">▼ 18% <span>last week</span></p>
+            </div>
+            <div class="card-footer">
+                <div class="chart"></div>
+                <span class="percentage">18%</span>
+            </div>
         </div>
-        <div>
-            <p style="color:rgb(0, 158, 0)">Action Taken</p>
-            <span style="color:white">{{ caseCount() }}</span>
+        <!-- <div class="card">
+            <div class="card-header">
+                <span class="title">Cases <span class="subtitle">/ Day</span></span>
+            </div>
+            <div class="card-body">
+                <h2>{{ caseCount() }}</h2>
+                <p class="change negative">+18% <span>25 last week</span></p>
+            </div>
+        </div> -->
+    </section>
+    <section class="one">
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Applications <span class="subtitle">/ Rejected</span></span>
+                <!-- <span class="icon">📊</span> -->
+            </div>
+            <div class="card-body">
+                <h2>{{ applicationCount() }}</h2>
+                <p class="change pos">▼ 18% <span>last week</span></p>
+            </div>
+            <div class="card-footer">
+                <div class="chart"></div>
+                <span class="percentage">18%</span>
+            </div>
         </div>
-    </section> -->
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Cases <span class="subtitle">/ Accepted</span></span>
+                <!-- <span class="icon">📊</span> -->
+            </div>
+            <div class="card-body">
+                <h2>{{ caseCount() }}</h2>
+                <p class="change negative">▼ 18% <span>last week</span></p>
+            </div>
+            <div class="card-footer">
+                <div class="chart"></div>
+                <span class="percentage">18%</span>
+            </div>
+        </div>
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Actions <span class="subtitle">/ Pending</span></span>
+                <!-- <span class="icon">📊</span> -->
+            </div>
+            <div class="card-body">
+                <h2>{{ actionCount() }}</h2>
+                <p class="change pos">▼ 18% <span>last week</span></p>
+            </div>
+            <div class="card-footer">
+                <div class="chart"></div>
+                <span class="percentage">18%</span>
+            </div>
+        </div>
+        <div class="cards">
+            <div class="card-header">
+                <span class="title">Applications <span class="subtitle">/ Action Taken</span></span>
+                <!-- <span class="icon">📊</span> -->
+            </div>
+            <div class="card-body">
+                <h2>{{ applicationCount() }}</h2>
+                <p class="change negative">▼ 18% <span>last week</span></p>
+            </div>
+            <div class="card-footer">
+                <div class="chart"></div>
+                <span class="percentage">18%</span>
+            </div>
+        </div>
+        <!-- <div class="card">
+            <div class="card-header">
+                <span class="title">Cases <span class="subtitle">/ Day</span></span>
+            </div>
+            <div class="card-body">
+                <h2>{{ caseCount() }}</h2>
+                <p class="change negative">+18% <span>25 last week</span></p>
+            </div>
+        </div> -->
+    </section>
     <!-- <section class="chart-row">
-        <div class="chart-box">
-            <canvas baseChart [type]="'pie'" [data]="pieChartData" [options]="pieChartOptions"></canvas>
-        </div>
         <div class="chart-box">
             <canvas baseChart [data]="horizontalBarChartData" [options]="horizontalBarChartOptions" [type]="'bar'">
             </canvas>
-        </div>
-        <div class="chart-box">
-            <canvas baseChart [type]="'bubble'" [data]="bubbleChartData" [options]="bubbleChartOptions"></canvas>
         </div>
     </section> -->
 </div>
