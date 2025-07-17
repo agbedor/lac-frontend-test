@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { ActionService } from '../../../services/action.service';
 import { ApplicationService } from '../../../services/application.service';
 import { CaseService } from '../../../services/case.service';
@@ -45,6 +45,7 @@ export class DashboardComponent {
   private mediatorService = inject(MediatorService);
   private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
+  @ViewChild('fileInput') fileInput!: ElementRef;
   applicationCount = this.applicationService.applicantCount;
   caseCount = this.caseService.caseCount;
   actionCount = this.actionService.actionCount;
@@ -153,6 +154,11 @@ export class DashboardComponent {
   removeFile() {
     this.selectedFile = null;
     this.fileError = null;
+
+    // Reset file input
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
   }
 
   onDragOver(event: DragEvent) {
