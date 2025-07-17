@@ -1,17 +1,17 @@
 :host {
     display: flex;
-    height: calc(100vh - 60px);
-    // height: 100vh;
+    // height: calc(100vh - 60px);
+    height: 100vh;
     /* Navbar only */
     background-color: #F9FDFF;
     // margin-bottom: 30px;
 }
 
-.manager-wrapper,
-.mediator-wrapper {
-    width: 100%;
-    display: block;
-}
+// .manager-wrapper,
+// .mediator-wrapper {
+//     width: 100%;
+//     display: block;
+// }
 
 
 .error {
@@ -21,6 +21,7 @@
 }
 
 .mediator-wrapper {
+    width: 100vw;
 
     .split {
         display: flex;
@@ -1034,6 +1035,8 @@
 }
 
 .manager-wrapper {
+    width: 100%;
+
     .container {
         padding: 30px 150px;
         width: 100%;
