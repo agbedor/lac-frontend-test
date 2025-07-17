@@ -246,45 +246,46 @@ export class DashboardComponent {
     if (this.actionFormGroup.invalid) return;
 
     if (formGroup.valid) {
-      const rawTime = this.actionFormGroup.value.timeCtrl; // e.g. "13:04"
-      const appointmentTime = rawTime ? `${rawTime}:00` : null;
+      // const rawTime = this.actionFormGroup.value.timeCtrl; // e.g. "13:04"
+      // const appointmentTime = rawTime ? `${rawTime}:00` : null;
 
-      const actionData: ActionModel = {
-        case: this.selectedApp.id,
-        action_taken: this.actionFormGroup.value.actionTakenCtrl!,
-        remarks: this.actionFormGroup.value.remarksCtrl!,
-        mediator_id: this.actionFormGroup.value.mediatorCtrl!.id!,
-        completed_by_id: this.userId,
-        appointment_date: this.formatDate(
-          new Date(this.actionFormGroup.value.dateCtrl!)
-        ),
-        appointment_time: appointmentTime!,
-      };
-      console.log('Action Payload:', JSON.stringify(actionData, null, 2));
-      this.loadings = true;
-      this.actionService.createAction(actionData).subscribe({
-        next: () => {
-          this.caseService.updateCase(this.selectedApp.id, {
-            status: 'action taken',
-          });
-          this.snackBar.open(
-            'action taken successful!, Case status updated',
-            'close',
-            {
-              duration: 3000, // 3 seconds
-              panelClass: ['success-snackbar'], // Optional custom class
-            }
-          );
-          this.backToList();
-        },
-        error: (err) => {
-          console.error('Error creating application', err);
-          this.snackBar.open('application failed. Please try again.', 'close', {
-            duration: 3000,
-            panelClass: ['error-snackbar'],
-          });
-        },
-      });
+      // const actionData: ActionModel = {
+      //   case: this.selectedApp.id,
+      //   action_taken: this.actionFormGroup.value.actionTakenCtrl!,
+      //   remarks: this.actionFormGroup.value.remarksCtrl!,
+      //   mediator_id: this.actionFormGroup.value.mediatorCtrl!.id!,
+      //   completed_by_id: this.userId,
+      //   appointment_date: this.formatDate(
+      //     new Date(this.actionFormGroup.value.dateCtrl!)
+      //   ),
+      //   appointment_time: appointmentTime!,
+      // };
+      // console.log('Action Payload:', JSON.stringify(actionData, null, 2));
+      // this.loadings = true;
+      // this.actionService.createAction(actionData).subscribe({
+      //   next: () => {
+      //     this.caseService.updateCase(this.selectedApp.id, {
+      //       status: 'action taken',
+      //     });
+      //     this.snackBar.open(
+      //       'action taken successful!, Case status updated',
+      //       'close',
+      //       {
+      //         duration: 3000, // 3 seconds
+      //         panelClass: ['success-snackbar'], // Optional custom class
+      //       }
+      //     );
+      //     this.backToList();
+      //   },
+      //   error: (err) => {
+      //     console.error('Error creating application', err);
+      //     this.snackBar.open('application failed. Please try again.', 'close', {
+      //       duration: 3000,
+      //       panelClass: ['error-snackbar'],
+      //     });
+      //   },
+      // });
+      this.backToList();
     }
   }
 }
