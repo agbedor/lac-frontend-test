@@ -17,6 +17,15 @@ export class UserService {
     });
   }
 
+  getUserGroup(): string | null {
+    return localStorage.getItem('group');
+  }
+
+  getUsername(): string | null {
+    return localStorage.getItem('username');
+  }
+
+
   signOut(): void {
     // Remove the user's authentication tokens from localStorage
     localStorage.removeItem('access');

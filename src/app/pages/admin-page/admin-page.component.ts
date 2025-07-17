@@ -13,7 +13,13 @@ import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-admin-page',
   standalone: true,
-  imports: [RouterModule, MatBadgeModule, MatButtonModule, MatIconModule,MatDividerModule],
+  imports: [
+    RouterModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+  ],
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.scss',
 })
@@ -24,6 +30,7 @@ export class AdminPageComponent {
   private actionService = inject(ActionService);
   private applicationService = inject(ApplicationService); // 👈 Injected
   username: string = '';
+  group: string = '';
   applicationCount = this.applicationService.applicantCount;
   // userCount: 2;p
   caseCount = this.caseService.caseCount;
@@ -32,6 +39,7 @@ export class AdminPageComponent {
   ngOnInit() {
     // Access localStorage AFTER component initializes
     this.username = localStorage.getItem('username') || '';
+    this.group = localStorage.getItem('group') || '';
     this.applicationService.loadApplicantCount(); // 👈 Load the initial count
     this.actionService.loadActionCount();
     this.caseService.loadCaseCount();

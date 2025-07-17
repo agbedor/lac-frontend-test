@@ -46,6 +46,7 @@ export class LandingComponent {
         localStorage.setItem('refresh', response.refresh);
         localStorage.setItem('username', response.user.username);
         localStorage.setItem('id', response.user.id.toString());
+        localStorage.setItem('group', response.user.group);  // ✅ Add group here
         this.snackBar.open('signin successful!', '', {
           duration: 3000, // 3 seconds
           panelClass: ['success-snackbar'], // Optional custom class

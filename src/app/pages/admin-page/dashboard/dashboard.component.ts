@@ -56,6 +56,9 @@ export class DashboardComponent {
   tomorrow: string = ''; // Change type to string
   userId: number = 0;
   loadings = false;
+  userGroup: string | null = null;
+  username: string | null = null;
+
 
   formatDate(date: Date): string {
     return new Date(date).toISOString().split('T')[0]; // "YYYY-MM-DD"
@@ -227,6 +230,8 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
+    this.userGroup = localStorage.getItem('group'); // ✅ Load user group
+    this.username = localStorage.getItem('username'); // ✅ Load user group
     this.applicationService.loadApplications();
     this.applicationService.loadApplicantCount();
     this.actionService.loadActionCount();
