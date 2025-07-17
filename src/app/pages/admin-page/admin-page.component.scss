@@ -7,26 +7,43 @@
 
 header {
   justify-content: space-between;
+  align-items: center;
   display: flex;
-  background-color: black;
-  padding: 10px 30px;
-  height: 60px;
+  background-color: white;
+  padding: 10px 150px;
+  height: 80px;
+}
+
+p {
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .title {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  h3 {
+    color: black;
+  }
 }
 
 i {
-  margin-right: 40px;
-  color: white;
-  font-size: 30px;
+  color: black;
+  font-size: 20px;
+  cursor: pointer;
+  /* ✅ Shows the hand/pointer on hover */
 }
 
-.uti i {
-  color: pink;
-  /* margin-right: 20px; */
-  margin-left: 40px;
+i:hover {
+  color: blue;
+  /* Change color on hover */
+  transform: scale(1.1);
+  /* Slight zoom */
+  transition: 0.2s ease-in-out;
 }
 
 .uti {
@@ -35,110 +52,7 @@ i {
   align-items: center;
 }
 
-.uti a.active {
-  color: gray;
-}
-
-ul li,
-a,
-ul {
-  text-decoration: none;
-  justify-content: space-between;
-  gap: 30px;
-  display: flex;
-  color: white;
-}
-
-.text-button {
-  background: none;
-  /* No background */
-  border: none;
-  /* No border */
-  color: white;
-  /* Text color */
-  cursor: pointer;
-  /* Pointer cursor on hover */
-  font-size: 16px;
-  /* Adjust font size */
-  padding: 0;
-  /* Remove default padding */
-  text-decoration: none;
-  /* Optional: remove underline */
-  outline: none;
-  /* Remove outline on focus */
-}
-
-.text-button:hover {
-  color: white;
-  /* Change color on hover */
-}
-
-.circle {
-  width: 28px;
-  height: 28px;
-  background-color: white;
-  /* Circle color */
-  border-radius: 50%;
-  /* Makes it a perfect circle */
-  display: flex;
-  /* Flexbox to center the icon */
-  justify-content: center;
-  cursor: pointer;
-  /* Add pointer cursor on hover */
-  transition: transform 0.2s ease-in-out;
-  /* Add a smooth hover effect */
-}
-
-.circle i {
-  color: black;
-  font-size: 12px;
-}
-
-.ul a.active {
-  color: gray;
-}
-
-a::ng-deep .mat-badge-content {
-  background-color: gray;
-  color: black;
-}
-
-a.active::ng-deep .mat-badge-content {
-  background-color: white;
-  color: black;
-}
-
-a {
-  font-size: 20px;
-}
-
-.title {
-  display: flex;
-  align-items: center; /* ✅ Align logo and nav vertically */
-  gap: 20px;
-}
-
-.ul ul {
-  display: flex;
-  gap: 30px;
-  list-style: none; /* ✅ Remove bullet points */
-  margin: 0;
-  padding: 0;
-  align-items: center; /* ✅ Make sure items align */
-}
-
-.ul li {
-  display: flex;
-  align-items: center;
-}
-
-.ul a {
-  color: white;
-  text-decoration: none;
-  font-size: 20px;
-}
-
 .img {
-  height: 40px;
-  width: auto;
+  height: 60px;
+  // width: auto;
 }

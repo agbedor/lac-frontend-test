@@ -8,11 +8,12 @@ import { UserService } from '../../services/user.service';
 import { ApplicationService } from '../../services/application.service';
 import { CaseService } from '../../services/case.service';
 import { ActionService } from '../../services/action.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-admin-page',
   standalone: true,
-  imports: [RouterModule, MatBadgeModule, MatButtonModule, MatIconModule],
+  imports: [RouterModule, MatBadgeModule, MatButtonModule, MatIconModule,MatDividerModule],
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.scss',
 })

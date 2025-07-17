@@ -1,272 +1,708 @@
 :host {
     display: flex;
-    height: calc(100vh - 60px);
+    // height: calc(100vh - 60px);
     /* Navbar only */
-    background-color: white;
+    background-color: #F9FDFF;
+    margin-bottom: 30px;
+}
+
+.error {
+    color: rgb(253, 82, 82);
+    font-size: 12px;
+    margin-top: 5px;
 }
 
 .container {
-    padding: 30px 30px;
+    padding: 30px 150px;
     width: 100%;
     box-sizing: border-box;
-    gap: 50px;
+    gap: 30px;
     display: flex;
     flex-direction: column;
 
-    .idk {
-        height: 170px;
-        border-radius: 15px;
-        background-color: black;
-    }
-
     .head {
-        display: grid;
-        align-items: start;
-        /* Align content at the top */
-        justify-items: start;
-        /* Align items to the left */
-        background-color: blue;
-        padding: 10px;
-        /* Optional: add some padding */
+        // background-color: blue;
+        // flex: 1;
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
 
-        h2 {
+        .sn {
             color: black;
-            font-size: 50px;
-            font-weight: 300;
-            margin: 0;
-            /* Remove default margin */
+
+            p {
+                color: gray;
+            }
         }
 
-        p {
-            color: black;
-            margin: 0;
-            /* Remove default margin */
-            font-size: 16px;
-            /* Optional: adjust size */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 90px;
+            border: 1px solid #E4E7EC;
+            border-radius: 10px;
+            background-color: white;
+            padding: 0px 15px;
+
+            .search {
+                width: 420px;
+                /* Set width to 80 */
+                height: 40px;
+                /* Set height to 50 */
+                background-color: white;
+                /* Set background color to black */
+                border-radius: 5px;
+                /* Set border radius to 5px */
+                display: flex;
+                /* Center any content (if needed) */
+                align-items: center;
+                /* Vertically center content */
+                justify-content: space-evenly;
+                /* Horizontally center content */
+                /* margin: 20px auto; */
+                /* Center the box in the middle of the page horizontally */
+                border: 1px solid #ccc;
+
+                input {
+                    border: none;
+                    outline: none;
+                    font-size: 14px;
+                    width: 100%;
+                    padding: 4px 8px;
+                    background: transparent;
+                }
+            }
+
+            .dd {
+                display: flex;
+                gap: 20px;
+
+                .dds {
+                    height: 40px;
+                    width: 180px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding-left: 5px;
+                    // padding-right: 10px;
+                }
+            }
         }
     }
 
-    .one {
-        display: flex;
+    .body {
+        // background-color: red;
+        // flex: 1;
         flex-direction: row;
+        display: flex;
         gap: 30px;
 
-        // .cards {
-        //     border: 1px solid rgb(209, 206, 206);
-        //     border-radius: 20px;
-        //     padding: 20px;
-        //     width: 350px;
-        //     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        //     display: flex;
-        //     flex-direction: column;
-        //     font-family: 'Inter', sans-serif;
-
-        //     h2 {
-        //         color: black;
-        //     }
-
-        //     .title {
-        //         font-size: 20px;
-        //     }
-
-        //     .card-header {
-        //         display: flex;
-        //         justify-content: space-between;
-        //         font-size: 14px;
-        //         color: #555;
-        //     }
-
-        //     .card-header .title {
-        //         font-weight: 600;
-        //     }
-
-        //     .subtitle {
-        //         color: #aaa;
-        //         font-weight: 400;
-        //     }
-
-        //     .card-body h2 {
-        //         font-size: 28px;
-        //         margin: 0;
-        //         font-weight: 700;
-        //     }
-
-        //     .change {
-        //         font-size: 14px;
-        //         margin-top: 6px;
-        //     }
-
-        //     .change.negative {
-        //         color: #e74c3c;
-        //         /* Red for negative */
-        //     }
-
-        //     .change.pos {
-        //         color: rgb(36, 151, 36);
-        //         /* Red for negative */
-        //     }
-
-        //     .change span {
-        //         color: #aaa;
-        //         margin-left: 4px;
-        //     }
-
-        //     .card-footer {
-        //         display: flex;
-        //         align-items: center;
-        //         justify-content: space-between;
-        //         margin-top: 10px;
-        //     }
-
-        //     .chart {
-        //         width: 80px;
-        //         height: 40px;
-        //         background: url('data:image/svg+xml;utf8,<svg width="80" height="40" xmlns="http://www.w3.org/2000/svg"><polyline points="0,30 20,20 40,25 60,15 80,18" fill="none" stroke="%23f4a261" stroke-width="2"/></svg>') no-repeat center;
-        //     }
-
-        //     .percentage {
-        //         font-size: 14px;
-        //         color: #f4a261;
-        //         font-weight: 600;
-        //     }
-        // }
-        .cards {
-            border: 1px solid rgb(209, 206, 206);
+        .card {
+            flex: 1;
+            background-color: white;
             border-radius: 15px;
-            padding: 20px;
-            width: 100%;
-            height: 100px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E4E7EC;
             display: flex;
             flex-direction: column;
-            font-family: 'Inter', sans-serif;
 
-            .card-header {
-                display: flex;
-                justify-content: space-between;
-                font-size: 14px;
-                color: #555;
+            .main {
+                flex: 2;
+                flex-direction: column;
+                justify-content: center;
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-top: 10px;
 
-                .title {
-                    font-weight: 600;
+                p {
+                    color: black;
                     font-size: 20px;
                 }
 
-                .atitle {
-                    font-weight: 300;
-                    font-size: 17px;
-                }
-
-                // .jon{
-                //     color: green;
-                // }
-            }
-
-            .card-body {
-
-                h2 {
+                h1 {
                     color: black;
                     font-size: 30px;
                 }
-            }
 
-            .subtitle {
-                color: #706f6f;
-                font-weight: 400;
-                font-size: 18px;
-            }
+                .count {
+                    // display: flex;
+                    // flex-direction: row;
 
-            .card-footer {
-
-                h2 {
-                    font-size: 28px;
-                    margin: 0;
-                    font-weight: 700;
+                    .percent {
+                        width: 20px;
+                        height: 50px;
+                        background-color: #ABEFC6;
+                    }
                 }
+            }
 
+            .side {
+                flex: 1;
+                background-color: #F5F9FB;
+                align-items: center;
+                display: flex;
+                padding-left: 30px;
+                border-bottom-left-radius: 15px;
+                border-bottom-right-radius: 15px;
+
+                p {
+                    color: #667085;
+                }
             }
         }
     }
 
-    .tb {
+    .tail {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        // flex: 2;
+        border: 1px solid #E4E7EC;
+        border-radius: 15px;
 
-        .dd {
+        .header {
+            background-color: white; // white
+            height: 50px;
+            // flex: 2;
             display: flex;
-            gap: 20px;
+            flex-direction: row;
+            padding: 0px 30px;
+            justify-content: space-between;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+
+            // background-color: blue;
+            .k {
+                text-align: right;
+                flex: 1;
+            }
+
+            p {
+                color: #475467;
+                flex: 2;
+            }
         }
 
-        .dropdown-label {
-            font-size: 17px;
-            font-weight: 500;
-            margin-bottom: 4px;
-            display: block;
-            color: gray;
+        .middle {
+            // flex: 13;
+            // background-color: red;
+            color: black;
+
+            .app {
+                display: flex;
+                flex-direction: row;
+                // height: 100px;
+                padding: 0px 30px;
+                justify-content: space-between;
+
+                p {
+                    flex: 2;
+                }
+
+                i:hover {
+                    color: #007bff; // change icon color on hover
+                }
+
+                i {
+                    display: flex;
+                    justify-content: right;
+                    align-items: center;
+                    flex: 1;
+                    cursor: pointer; // shows the palm/hand on hover
+                }
+            }
+
+            // Alternating background colors
+            .app:nth-child(odd) {
+                background-color: #F9FAFB; // light gray
+            }
+
+            .app:nth-child(even) {
+                background-color: white; // white
+            }
         }
 
-        .bn {
+        .footer {
+            background-color: white; // white
+            height: 60px;
+            padding: 0px 30px;
+            align-items: center;
+            justify-content: space-between;
             display: flex;
+            flex-direction: row;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            // flex: 3;
+            // background-color: yellow;
+
+            p {
+                color: black;
+            }
+
+            .bns {
+                display: flex;
+                flex-direction: row;
+                gap: 15px;
+
+                .btns {
+                    background-color: white;
+                    color: black;
+                    font-size: 15px;
+                    width: 90px;
+                    height: 33px;
+                    border: 1px solid #E4E7EC;
+                    border-radius: 7px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                }
+
+                .btn {
+                    background-color: white;
+                    color: black;
+                    font-size: 15px;
+                    width: 70px;
+                    height: 33px;
+                    border: 1px solid #E4E7EC;
+                    border-radius: 7px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                }
+            }
+        }
+    }
+}
+
+.detail-container {
+    padding: 20px 150px;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+
+    .head {
+        // background-color: yellow;
+        display: flex;
+        flex-direction: column;
+
+        .directions {
+            display: flex;
+            flex-direction: row;
             gap: 20px;
+
+            p {
+                color: black;
+            }
+
+            .arrows {
+                flex-direction: row;
+                gap: 20px;
+                display: flex;
+                align-items: center;
+            }
         }
 
-        .dg,
-        .dropdown-group {
+        .dets {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            p {
+                color: black;
+            }
+
+            h1 {
+                color: black;
+            }
+
+            .ac {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    i {
+        color: black;
+        cursor: pointer; // shows the palm/hand on hover
+
+    }
+
+    i:hover {
+        color: blue; // change icon color on hover
+        transform: scale(1.1); // slight zoom effect
+        transition: 0.2s ease-in-out;
+    }
+
+
+    .back-btn {
+        margin-bottom: 20px;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .back-btn:hover {
+        background: #0056b3;
+    }
+
+    .tail {
+
+        // background-color: blue;
+        .middle {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            /* or whatever vertical space you want between label & dropdown */
+            border: 1px solid #E4E7EC;
+            background-color: white;
+            // border-radius: 15px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 30px;
+            padding-top: 30px;
+            gap: 40px;
+            margin-top: 30px;
+            // margin-bottom: 30px;
+
+            // height: 700px;
+            // flex: 7;
+            .form-row {
+                display: flex;
+                gap: 40px;
+                // margin-bottom: 30px;
+
+                >div {
+                    flex: 1;
+                }
+
+                .input-label {
+                    font-size: 14px;
+                    font-weight: 400;
+                    display: block;
+                    margin-bottom: 6px;
+                    color: gray;
+                }
+
+                select.custom-input {
+                    color: gray;
+                    padding: 0 36px 0 12px; // add right padding for dropdown icon
+                    appearance: none; // optional: remove native style for full control (you'll need a custom arrow icon)
+                    background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='gray' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+                    background-repeat: no-repeat;
+                    background-position: right 12px center;
+                    background-size: 16px;
+                }
+
+                .custom-input {
+                    width: 100%;
+                    height: 40px;
+                    background-color: #F5F5F5;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 0 12px;
+                    font-size: 14px;
+                    outline: none;
+                    box-sizing: border-box;
+                    font-weight: 500;
+                }
+
+                .custom-inputs {
+                    width: 100%;
+                    height: 150px;
+                    background-color: #F5F5F5;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 0 12px;
+                    font-size: 14px;
+                    outline: none;
+                    box-sizing: border-box;
+                    font-weight: 500;
+                }
+            }
+
+            .per {
+                height: 60px;
+                border: 1px solid #E4E7EC;
+                border-radius: 10px;
+                color: black;
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+                font-weight: 500;
+                // margin-bottom: 40px;
+            }
         }
 
-        .custom-select-wrapper {
-            position: relative;
+        .end {
+            height: 100px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            border-top: 0px;
+            border: 1px solid #E4E7EC;
+            border-top: none;
+            margin-bottom: 50px;
             display: flex;
             align-items: center;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 6px 12px;
-            width: 150px;
-            background-color: #fff;
-        }
+            justify-content: end;
+            padding-right: 30px;
+            background-color: white;
 
-        .custom-select-wrapper select {
-            appearance: none;
-            border: none;
-            outline: none;
-            padding: 6px 0 6px 32px;
-            width: 100%;
+            .btns {
+                background-color: #1c65d2;
+                color: white;
+                font-size: 15px;
+                width: 130px;
+                height: 40px;
+                border: none;
+                border-radius: 7px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .tail2 {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+
+        .file-info {
+            // margin-top: 10px;
             font-size: 14px;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .icon {
-            position: absolute;
-            left: 10px;
-            color: #555;
-            font-size: 20px;
-        }
-
-        .arrow {
-            position: absolute;
-            right: 10px;
-            color: #555;
-            pointer-events: none;
-        }
-
-        .btn {
-            background-color: #fff;
-            color: black;
-            font-size: 17px;
-            font-weight: 600;
-            // padding: 4px 8px;
-            margin-top: 30px;
-            width: 110px;
-            border: 1px solid #ccc;
+            color: #333;
+            background: white;
+            padding: 8px 12px;
+            color: blue;
             border-radius: 10px;
-            // height: 50px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #E4E7EC;
+            height: 50px;
         }
+
+        .file-info p {
+            margin: 0;
+            flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .file-info button {
+            background: transparent;
+            border: none;
+            color: red;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+
+        .upload {
+            height: 150px;
+            border: 1px dashed #E4E7EC;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+
+            // border: 4px solid transparent;
+            // border-image: repeating-linear-gradient(45deg,
+            //         /* Diagonal so pattern is consistent */
+            //         #E4E7EC 0 5px,
+            //         /* Dash length */
+            //         transparent 20px 30px
+            //         /* Gap length */
+            //     ) 10;
+            .upload.drag-over {
+                border-color: #007bff;
+                background-color: #f8f9ff;
+            }
+
+            .img {
+                width: 50px;
+                margin-bottom: 10px;
+            }
+
+            .error {
+                color: red;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+
+            p {
+                color: black;
+            }
+
+            .img {
+                // font-size: 20px;
+                height: 50px;
+            }
+        }
+
+        .required {
+            color: blue;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 40px;
+
+            >div {
+                flex: 1;
+            }
+
+            .input-label {
+                font-size: 14px;
+                font-weight: 400;
+                display: block;
+                margin-bottom: 6px;
+                color: black;
+            }
+
+            select.custom-input {
+                color: gray;
+                padding: 0 36px 0 12px; // add right padding for dropdown icon
+                appearance: none; // optional: remove native style for full control (you'll need a custom arrow icon)
+                background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='gray' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                background-size: 16px;
+            }
+
+            .custom-input {
+                width: 100%;
+                height: 40px;
+                background-color: #F3F7FD;
+                border: none;
+                border-radius: 8px;
+                padding: 0 12px;
+                font-size: 14px;
+                outline: none;
+                box-sizing: border-box;
+            }
+
+            .custom-inputs {
+                width: 100%;
+                height: 150px;
+                background-color: #F3F7FD;
+                border: none;
+                border-radius: 8px;
+                padding: 0 12px;
+                font-size: 14px;
+                outline: none;
+                box-sizing: border-box;
+            }
+
+        }
+
+        .per2 {
+            height: 80px;
+            border: 1px solid #E4E7EC;
+            border-radius: 10px;
+            color: black;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            font-weight: 500;
+            gap: 10px;
+            // margin-bottom: 40px;
+
+            .img {
+                // font-size: 20px;
+                height: 45px;
+            }
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #E4E7EC;
+            background-color: white;
+            border-radius: 15px;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 30px;
+            padding-top: 30px;
+            gap: 50px;
+            margin-top: 30px;
+        }
+
+        .middle {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #E4E7EC;
+            background-color: white;
+            border-radius: 15px;
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 30px;
+            padding-top: 30px;
+            gap: 50px;
+            // margin-top: 50px;
+        }
+
+        .body {
+
+            .start {
+                display: flex;
+                flex-direction: column;
+                border: 1px solid #E4E7EC;
+                background-color: white;
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-bottom: 30px;
+                padding-top: 30px;
+                gap: 50px;
+                // margin-top: 30px;
+            }
+
+            .end {
+                height: 100px;
+                border-bottom-left-radius: 15px;
+                border-bottom-right-radius: 15px;
+                border-top: 0px;
+                border: 1px solid #E4E7EC;
+                border-top: none;
+                margin-bottom: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0px 30px;
+                background-color: white;
+
+                .btns {
+                    background-color: #1c65d2;
+                    color: white;
+                    font-size: 15px;
+                    width: 130px;
+                    height: 40px;
+                    border: none;
+                    border-radius: 7px;
+                    cursor: pointer;
+                }
+
+                .btn {
+                    background-color: white;
+                    color: black;
+                    font-size: 15px;
+                    width: 130px;
+                    height: 40px;
+                    border: 1px solid #E4E7EC;
+                    border-radius: 7px;
+                    cursor: pointer;
+                }
+            }
+
+        }
+
     }
 }

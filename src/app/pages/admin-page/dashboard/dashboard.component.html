@@ -1,152 +1,598 @@
-<div class="container">
-    <!-- <section class="head">
-        <h2>Overview</h2>
-        <p>July 14th 2025</p>
-    </section> -->
-    <section toolbar class="tb">
-        <div class="dd">
-            <div class="dropdown-group">
-                <label class="dropdown-label">Applications</label>
-                <div class="custom-select-wrapper" matTooltip="filter date created">
-                    <span class="icon fa-solid fa-file-alt"></span>
-                    <!-- <input type="date" /> -->
-                    <select>
-                        <option [ngValue]="null">status</option>
-                        <!-- <option *ngFor="let empsta of employmentstatus()" [ngValue]="empsta">
-                  {{ empsta.name }}
-                </option> -->
-                    </select>
-                    <span class="arrow material-icons">expand_more</span>
-                </div>
+<div class="container" *ngIf="!selectedApp">
+    <section class="head">
+        <div class="sn">
+            <h1>Legal Aid Applications</h1>
+            <p>Manage and track all submitted applications</p>
+        </div>
+        <div class="toolbar">
+            <div class="search">
+                <input #inputRef type="text" placeholder="Search by case id, applicant name" class="search-input"
+                    (input)="onSearch($event)" (blur)="onBlur(inputRef.value)" autofocus />
             </div>
-            <div class="dropdown-group">
-                <label class="dropdown-label">Cases</label>
-                <div class="custom-select-wrapper" matTooltip="filter marital status">
-                    <span class="icon fa-solid fa-briefcase"></span>
-                    <select>
-                        <option [ngValue]="null">status</option>
-                        <!-- <option *ngFor="let masta of maritalstatus()" [ngValue]="masta">
-                  {{ masta.name }}
-                </option> -->
-                    </select>
-                    <span class="arrow material-icons">expand_more</span>
-                </div>
-            </div>
-            <div class="dropdown-group">
-                <label class="dropdown-label">Actions</label>
-                <div class="custom-select-wrapper" matTooltip="filter employment status">
-                    <span class="icon fa-solid fa-tasks"></span>
-                    <select>
-                        <option [ngValue]="null">status</option>
-                        <!-- <option *ngFor="let empsta of employmentstatus()" [ngValue]="empsta">
-                  {{ empsta.name }}
-                </option> -->
-                    </select>
-                    <span class="arrow material-icons">expand_more</span>
-                </div>
-            </div>
-            <div class="dropdown-group">
-                <label class="dropdown-label">Date Created</label>
-                <div class="custom-select-wrapper" matTooltip="filter marital status">
-                    <span class="icon fa-regular fa-calendar-days"></span>
-                    <select>
-                        <option [ngValue]="null">Filter All</option>
-                        <!-- <option *ngFor="let masta of maritalstatus()" [ngValue]="masta">
-                  {{ masta.name }}
-                </option> -->
-                    </select>
-                    <span class="arrow material-icons">expand_more</span>
-                </div>
+            <div class="dd">
+                <select class="dds">
+                    <option [ngValue]="null">All Case Type</option>
+                </select>
+                <select class="dds">
+                    <option [ngValue]="null">All Status</option>
+                </select>
             </div>
         </div>
-        <div class="bn">
+    </section>
+    <section class="body">
+        <div class="card">
+            <div class="main">
+                <p>Total Applications</p>
+                <div class="count">
+                    <h1>
+                        {{ applicationCount() }}
+                    </h1>
+                    <!-- <div class="percent">
+                    </div> -->
+                </div>
+            </div>
+            <div class="side">
+                <p>From Jan 01 2025 - July 10 2025</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="main">
+                <p>Approved</p>
+                <h1>
+                    {{ caseCount() }}
+                </h1>
+            </div>
+            <div class="side">
+                <p>From Jan 01 2025 - July 10 2025</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="main">
+                <p>Pending Review</p>
+                <h1>
+                    {{ actionCount() }}
+                </h1>
+            </div>
+            <div class="side">
+                <p>From Jan 01 2025 - July 10 2025</p>
+            </div>
+        </div>
+    </section>
+    <section class="tail">
+        <div class="header">
+            <p>
+                Case Number
+            </p>
+            <p>
+                Applicant Name
+            </p>
+            <p>
+                Type
+            </p>
+            <p>
+                Applicant Status
+            </p>
+            <p>
+                Submitted On
+            </p>
+            <p class="k">
+                Action
+            </p>
+        </div>
+        <mat-divider></mat-divider>
 
-            <button class="btn" matTooltip="export to excel">
-                Export To Excel
+        <div class="middle">
+            <!-- Loading -->
+            <div class="load" *ngIf="loading()">
+                <p class="loading-text">Loading applications...</p>
+            </div>
+
+            <!-- When Not Loading -->
+            <ng-container *ngIf="!loading()">
+                <ng-container *ngIf="displayedApps().length > 0; else noData">
+                    <div class="app" *ngFor="let app of displayedApps()">
+                        <p>{{ app.id }}</p>
+                        <p>{{ app.title?.name }} {{ app.first_name }} {{ app.last_name }}</p>
+                        <p>{{ app.gender?.name }}</p>
+                        <p>{{ app.age }}</p>
+                        <p>{{ app.employment_status?.name }}</p>
+                        <i (click)="viewDetails(app)" class="fa-regular fa-eye"></i>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <!-- No Data -->
+            <ng-template #noData>
+                <p class="no-data">No data available</p>
+            </ng-template>
+        </div>
+
+        <!-- <div class="middle">
+            Show Loading
+            <div class="load" *ngIf="loading()">
+                <td colspan="8">
+                    <p class="loading-text">Loading applications.....</p>
+                </td>
+            </div>
+
+             When Not Loading
+            <ng-container *ngIf="!loading()">
+                <ng-container *ngIf="displayedApps().length > 0; else noData">
+                    <div class="app" *ngFor="let app of displayedApps()">
+                        <p>{{ app.id }}</p>
+                        <p>{{ app.title?.name }} {{ app.first_name }} {{ app.last_name }}</p>
+                        <p>{{ app.gender?.name }}</p>
+                        <p>{{ app.age }}</p>
+                        <p>{{ app.employment_status?.name }}</p>
+                        <p class="k">{{ app.marital_status?.name }}</p>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <ng-template #noData>
+                <p colspan="8" class="no-data">No data available</p>
+            </ng-template>
+        </div> -->
+        <mat-divider></mat-divider>
+        <div class="footer">
+            <div class="bns">
+                <button class="btns" matTooltip="Previous" matStepperPrevious>
+                    Previous
+                </button>
+                <button class="btn" matTooltip="Previous" matStepperPrevious>
+                    Next
+                </button>
+            </div>
+            <p>
+                Page 1 of 10
+            </p>
+        </div>
+    </section>
+</div>
+
+<div class="detail-container" *ngIf="selectedApp">
+    <section class="head">
+        <div class="directions">
+            <div class="arrows">
+                <i class="fa-solid fa-arrow-left-long" (click)="backToList()"></i>
+                <i class="fa-solid fa-arrow-right-long"></i>
+            </div>
+            <p>
+                Legal Aid Application
+            </p>
+        </div>
+        <div class="dets">
+            <div class="ac">
+                <h1>
+                    PV-CAS-1509C4 {{ selectedApp.id }}
+                </h1>
+                <p>
+                    Arlene McCoy
+                </p>
+            </div>
+            <div class="ac">
+                <p>Submitted On:</p>
+                <p>
+                    2020-05-05 10:21:13
+                </p>
+            </div>
+        </div>
+    </section>
+    <mat-divider></mat-divider>
+    <section class="tail" *ngIf="!actionMode; else actionSection">
+        <div class="middle">
+            <div class="per">
+                <p>Personal Information</p>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Full Name
+                    </label>
+                    <input type="text" value="{{ selectedApp.first_name}} {{ selectedApp.last_name}}"
+                        class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Date of Birth
+                    </label>
+                    <input type="text" value="{{ selectedApp.dob}}" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Gender
+                    </label>
+                    <input type="text" value="{{ selectedApp.gender?.name}}" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Nationality
+                    </label>
+                    <input type="text" value="{{ selectedApp.nationality?.name}}" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        ID Type
+                    </label>
+                    <input type="text" value="{{ selectedApp.idtype?.name}}" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        ID Number
+                    </label>
+                    <input type="text" value="{{ selectedApp.id}}" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="per">
+                <p>Contact & Residence Information</p>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        House Address
+                    </label>
+                    <input type="text" value="{{ selectedApp.address}}" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Region
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        How long applicant lived there
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Mobile Phone
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        ID Type
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        ID Number
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="per">
+                <p>Employment & Financial Details</p>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Employment Status
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Monthly Income
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Job Role/Occupation
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Highest Qualification
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="per">
+                <p>Legal Case Information</p>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Case Type
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Most Serious Charge/Issue
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Applicant role in the case
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Other Party’s Name
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Other Party’s Contact
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Other Party’s Address
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="per">
+                <p>Legal Aid History</p>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Gender
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Nationality
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="per">
+                <p>Family Information</p>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Spouse Name
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Number of Children
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Spouse Occupation
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+                <div>
+                    <label class="input-label">
+                        Spouse Monthly Income
+                    </label>
+                    <input type="text" value="John Doe" class="custom-input" readonly />
+                </div>
+            </div>
+            <div class="per">
+                <p>Summary of Case</p>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label class="input-label">
+                        Case Summary
+                    </label>
+                    <input type="text" value="John Doe" class="custom-inputs" readonly />
+                </div>
+            </div>
+            <!-- <label class="input-label">
+                Case Summary
+            </label> -->
+            <div class="per">
+                <p>Police report.pdf</p>
+            </div>
+        </div>
+
+        <div class="end">
+            <button class="btns" matTooltip="Previous" (click)="enableActionMode(selectedApp)">
+                Take Action
             </button>
         </div>
     </section>
-    <!-- <section class="idk">
-
-    </section> -->
-    <section class="one">
-        <!-- <div class="cards">
-            <div class="card-header">
-                <span class="jon fa-regular fa-calendar-days"><span class="title"> Applications</span></span>
-                <span class="subtitle">Last 30 days</span>
-            </div>
-            <div class="card-body">
-                <h2>{{ applicationCount() }}</h2>
-            </div>
-            <div class="card-footer">
-                <p class="subtitle">vs. 7120,14 Last Period</p>
-            </div>
-        </div> -->
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Applications <span class="atitle">/ Accepted</span></span>
-                <span class="subtitle">Last 30 days</span>
-            </div>
-            <div class="card-body">
-                <h2>{{ applicationCount() }}</h2>
-            </div>
-            <!-- <div class="card-footer">
-                <p class="subtitle">vs. 7120,14 Last Period</p>
-            </div> -->
-        </div>
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Applications <span class="atitle">/ Rejected</span></span>
-                <span class="subtitle">Last 3 months</span>
-            </div>
-            <div class="card-body">
-                <h2>17</h2>
-            </div>
-            <!-- <div class="card-footer">
-                <p class="subtitle">vs. 7120,14 Last Period</p>
-            </div> -->
-        </div>
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Cases <span class="atitle">/ Pending</span></span>
-                <span class="subtitle">Last 30 days</span>
-            </div>
-            <div class="card-body">
-                <h2>{{ caseCount() }}</h2>
-            </div>
-            <!-- <div class="card-footer">
-                <p class="subtitle">vs. 7120,14 Last Period</p>
-            </div> -->
-        </div>
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Cases <span class="atitle">/ Action Taken</span></span>
-                <span class="subtitle">Last 30 days</span>
-            </div>
-            <div class="card-body">
-                <h2>3</h2>
-            </div>
-            <!-- <div class="card-footer">
-                <p class="subtitle">vs. 7120,14 Last Period</p>
-            </div> -->
-        </div>
-        <div class="cards">
-            <div class="card-header">
-                <span class="title">Actions</span>
-                <span class="subtitle">Last 30 days</span>
-            </div>
-            <div class="card-body">
-                <h2>{{ actionCount() }}</h2>
-            </div>
-            <!-- <div class="card-footer">
-                <p class="subtitle">vs. 7120,14 Last Period</p>
-            </div> -->
-        </div>
-    </section>
-    <!-- <section class="chart-row">
-        <div class="chart-box">
-            <canvas baseChart [data]="horizontalBarChartData" [options]="horizontalBarChartOptions" [type]="'bar'">
-            </canvas>
-        </div>
-    </section> -->
+    <ng-template #actionSection>
+        <form [formGroup]="actionFormGroup">
+            <section class="tail2">
+                <div class="main">
+                    <div class="per2">
+                        <img class="img" src="assets/images/doc.png" alt="Apartment photo" />
+                        <p>Action Details</p>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label class="input-label">
+                                Action to Be Taken <span class="required">*</span>
+                            </label>
+                            <input type="text" placeholder="acccept" class="custom-input" required
+                                formControlName="actionTakenCtrl" />
+                            <div class="error"
+                                *ngIf="actionFormGroup.get('actionTakenCtrl')?.touched && actionFormGroup.get('actionTakenCtrl')?.invalid">
+                                Required.
+                            </div>
+                        </div>
+                        <div>
+                            <label class="input-label">
+                                Official Name <span class="required">*</span>
+                            </label>
+                            <input type="text" value="Edmund Foley Esq." class="custom-input" readonly />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label class="input-label">
+                                Appointment Date <span class="required">*</span>
+                            </label>
+                            <input type="date" formControlName="dateCtrl" class="custom-input" [min]="tomorrow"
+                                required />
+                            <div class="error"
+                                *ngIf="actionFormGroup.get('dateCtrl')?.touched && actionFormGroup.get('dateCtrl')?.invalid">
+                                Required.
+                            </div>
+                        </div>
+                        <div>
+                            <label class="input-label">
+                                Appointment Time <span class="required">*</span>
+                            </label>
+                            <input placeholder="00:00" class="custom-input" formControlName="timeCtrl"
+                                [dropSpecialCharacters]="false" mask="00:00" required (blur)="validateTimeInput()" />
+                            <div class="error"
+                                *ngIf="actionFormGroup.get('timeCtrl')?.touched && actionFormGroup.get('timeCtrl')?.hasError('required')">
+                                Required.
+                            </div>
+                            <div class="error" *ngIf="actionFormGroup.get('timeCtrl')?.hasError('invalidTime')">
+                                Time must be between 00:00 and 23:59
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label class="input-label">
+                                Digital Signature <span class="required">*</span>
+                            </label>
+                            <div class="upload">
+                                <img class="img" src="assets/images/sig.png" alt="Apartment photo" />
+                                <p>
+                                    Upload your signature <strong>or drag and drop</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="middle">
+                    <div class="per2">
+                        <img class="img" src="assets/images/ass.png" alt="Apartment photo" />
+                        <p>Assignment Details</p>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label class="input-label">
+                                Assigned To <span class="required">*</span>
+                            </label>
+                            <select class="custom-input" formControlName="mediatorCtrl" required>
+                                <option [ngValue]="null">select mediator</option>
+                                <option *ngFor="let med of mediators()" [ngValue]="med">
+                                    {{ med.first_name }} {{ med.last_name }}
+                                </option>
+                            </select>
+                            <div class="error"
+                                *ngIf="actionFormGroup.get('mediatorCtrl')?.touched && actionFormGroup.get('mediatorCtrl')?.invalid">
+                                Required.
+                            </div>
+                        </div>
+                        <div>
+                            <label class="input-label">
+                                Date Assigned <span class="required">*</span>
+                            </label>
+                            <input type="text" placeholder="2020-05-05" class="custom-input" required />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label class="input-label">
+                                Digital Signature <span class="required">*</span>
+                            </label>
+                            <div class="upload" (click)="fileInput.click()" (dragover)="onDragOver($event)"
+                                (drop)="onDrop($event)">
+                                <img class="img" src="assets/images/sig.png" alt="Apartment photo" />
+                                <p>
+                                    Upload your signature <strong>or drag and drop</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" />
+                    <div *ngIf="fileError" class="error">{{ fileError }}</div>
+                    <div *ngIf="selectedFile" class="file-info">
+                        <p>{{ selectedFile.name }} ({{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB)</p>
+                        <button type="button" (click)="removeFile()">Remove</button>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="start">
+                        <div class="per2">
+                            <img class="img" src="assets/images/remark.png" alt="Apartment photo" />
+                            <p>Remarks & Comments</p>
+                        </div>
+                        <div class="form-row">
+                            <div>
+                                <label class="input-label">
+                                    Remarks/Comments <span class="required">*</span>
+                                </label>
+                                <input type="text" placeholder="Add detailed remarks, notes, or instructions"
+                                    class="custom-inputs" required formControlName="remarksCtrl" required />
+                                <div class="error"
+                                    *ngIf="actionFormGroup.get('remarksCtrl')?.touched && actionFormGroup.get('remarksCtrl')?.invalid">
+                                    Required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div>
+                                <label class="input-label">
+                                    Attachment
+                                </label>
+                                <div class="upload" (click)="fileInput.click()" (dragover)="onDragOver($event)"
+                                    (drop)="onDrop($event)">
+                                    <img class="img" src="assets/images/cloud.png" alt="Apartment photo" />
+                                    <div>
+                                        <p>
+                                            Upload a document <strong>or drag and drop</strong>
+                                        </p>
+                                        <p>
+                                            Supported formats: PDF, Ms Word (Max. 5MB) </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="file" #fileInput hidden (change)="onFileSelected($event)"
+                            accept=".pdf,.doc,.docx" />
+                        <div *ngIf="fileError" class="error">{{ fileError }}</div>
+                        <div *ngIf="selectedFile" class="file-info">
+                            <p>{{ selectedFile.name }} ({{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB)</p>
+                            <button type="button" (click)="removeFile()">Remove</button>
+                        </div>
+                    </div>
+                    <div class="end">
+                        <button class="btn" matTooltip="Previous" (click)="disableActionMode()">
+                            Cancel
+                        </button>
+                        <button class="btns" matTooltip="Previous" (click)="backToList()">
+                            Save & Update
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </ng-template>
 </div>

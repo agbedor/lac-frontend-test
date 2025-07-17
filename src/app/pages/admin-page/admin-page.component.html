@@ -2,41 +2,16 @@
     <header class="header">
         <div class="title">
             <img class="img" src="assets/images/lac_logo.png" alt="Apartment photo" />
-            <!-- <i class="fa-brands fa-npm"></i> -->
-            <nav class="ul">
-                <ul>
-                    <li>
-                        <a class="demo-section" routerLink="dashboard" routerLinkActive="active">Dashboard</a>
-                    </li>
-                    <li>
-                        <a [matBadge]="applicationCount()" matBadgeOverlap="false" matBadgeSize="small"
-                            class="demo-section" routerLink="applications" routerLinkActive="active">Applications</a>
-                    </li>
-                    <li>
-                        <a [matBadge]="caseCount()" matBadgeOverlap="false" matBadgeSize="small" class="demo-section"
-                            routerLink="cases" routerLinkActive="active">Cases</a>
-                    </li>
-                    <li>
-                        <a [matBadge]="actionCount()" matBadgeOverlap="false" matBadgeSize="small" class="demo-section"
-                            routerLink="actions" routerLinkActive="active">Actions</a>
-                    </li>
-                    <li>
-                        <a routerLink="analysis" routerLinkActive="active">Analysis</a>
-                    </li>
-                </ul>
-            </nav>
+            <h3>
+                Legal Aid Commission
+            </h3>
         </div>
         <div class="uti">
-            <a routerLink="users" routerLinkActive="active">{{username}}</a>
-            <!-- <div class="circle">
-                <i class="fa-solid fa-bell"></i>
-            </div> -->
-            <p (click)="signOut()">Logout</p>
-            <!-- <div class="circle" (click)="signOut()">
-                <i class="fa-solid fa-power-off"></i>
-            </div> -->
+            <p>{{username}}</p>
+            <i class="fa-regular fa-bell"></i> <i class="fa-solid fa-arrow-right-from-bracket" (click)="signOut()"></i>
         </div>
     </header>
+    <mat-divider></mat-divider>
     <section class="content">
         <router-outlet></router-outlet>
     </section>
