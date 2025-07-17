@@ -23,6 +23,7 @@ import { MediatorModel } from '../../../models/mediator-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActionModel } from '../../../models/action-model';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -58,7 +59,6 @@ export class DashboardComponent {
   loadings = false;
   userGroup: string | null = null;
   username: string | null = null;
-
 
   formatDate(date: Date): string {
     return new Date(date).toISOString().split('T')[0]; // "YYYY-MM-DD"
@@ -114,7 +114,7 @@ export class DashboardComponent {
     this.actionMode = false; // back to detail view
   }
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.searchSubject
       .pipe(
         debounceTime(300),
@@ -232,6 +232,7 @@ export class DashboardComponent {
   ngOnInit() {
     this.userGroup = localStorage.getItem('group'); // ✅ Load user group
     this.username = localStorage.getItem('username'); // ✅ Load user group
+    this.cdr.detectChanges(); // ✅ Ensures view updates in prod
     this.applicationService.loadApplications();
     this.applicationService.loadApplicantCount();
     this.actionService.loadActionCount();

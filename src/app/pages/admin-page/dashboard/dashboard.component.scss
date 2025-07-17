@@ -7,11 +7,11 @@
     // margin-bottom: 30px;
 }
 
-// .manager-wrapper,
-// .mediator-wrapper {
-//     width: 100%;
-//     display: block;
-// }
+.manager-wrapper,
+.mediator-wrapper {
+    width: 100%;
+    display: block;
+}
 
 
 .error {
@@ -21,7 +21,6 @@
 }
 
 .mediator-wrapper {
-    width: 100vw;
 
     .split {
         display: flex;
@@ -1035,8 +1034,6 @@
 }
 
 .manager-wrapper {
-    width: 100%;
-
     .container {
         padding: 30px 150px;
         width: 100%;
