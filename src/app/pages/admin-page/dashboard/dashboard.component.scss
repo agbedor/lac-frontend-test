@@ -1,9 +1,11 @@
 :host {
     display: flex;
     // height: calc(100vh - 60px);
-    height: 100vh;
+    height: 100%;
     /* Navbar only */
-    background-color: #F9FDFF;
+    // background-color: #F9FDFF;
+    // background: linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 10%, #3070D1 100%);
+    background: linear-gradient(to bottom, #FFFFFF 0vh, #3070D1 100vh);
     // margin-bottom: 30px;
 }
 
@@ -1428,6 +1430,7 @@
         gap: 30px;
         display: flex;
         flex-direction: column;
+
 
         .head {
             // background-color: yellow;
