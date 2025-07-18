@@ -1,35 +1,104 @@
 .login-container {
     display: flex;
     height: 100vh;
-    //   font-family: 'Segoe UI', sans-serif;
+    flex-direction: row;
 
     .login-left {
         flex: 1;
-        // padding: 60px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        /* center horizontally */
         background: white;
         text-align: center;
-        /* center text inside */
+        align-items: center;
+        gap: 100px;
+        // justify-content: space-between;
+        // margin-bottom: 100px;
 
-        p {
-            font-size: 28px;
+        .error {
+            color: red;
         }
 
-        .img {
-            // font-size: 50px;
-            color: pink;
+        .head {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            width: 500px; // ✅ fixed width
+            margin-top: 50px;
+
+            p {
+                font-size: 20px;
+                font-weight: 500;
+            }
+
+            .img {
+                height: 50px;
+            }
         }
 
-        h1 {
-            font-size: 100px;
+        .one {
+            align-items: start;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+
+            h2 {
+                font-weight: 600;
+                font-size: 30px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                color: #7F7D83;
+                margin: 0;
+            }
         }
 
-        h3 {
-            font-size: 30px;
+        .two {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+
+            .fields {
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+
+                .fie {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    text-align: start;
+
+                    .required {
+                        color: blue;
+                    }
+                }
+            }
+
+            // .vid {
+            //     display: flex;
+            //     flex-direction: row;
+            //     gap: 20px;
+            //     align-items: center;
+
+            //     mat-divider[vertical] {
+            //         width: 50px;
+            //         height: 24px;
+            //         /* or 100% if you want full height */
+            //     }
+            // }
+            .custom-input {
+                width: 100%;
+                height: 50px;
+                background-color: white;
+                border: 1px solid #E4E7EC;
+                border-radius: 8px;
+                padding: 0 12px;
+                font-size: 14px;
+                outline: none;
+                box-sizing: border-box;
+            }
         }
 
         i {
@@ -41,49 +110,43 @@
 
         form {
             width: 100%;
-            max-width: 350px;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            /* uniform vertical spacing */
+            width: 500px; // ✅ fixed width
         }
 
-        .full-width {
-            font-size: 20px;
-            width: 100%;
-            /* you can remove margin-bottom now, gap handles it */
-        }
 
-        .full-j {
-            font-size: 20px;
-            width: 100%;
-            color: white;
-            background-color: black;
-            /* you can remove margin-bottom now, gap handles it */
-        }
+        // .full-j {
+        //     font-size: 20px;
+        //     width: 100%;
+        //     color: white;
+        //     background-color: black;
+        //     /* you can remove margin-bottom now, gap handles it */
+        // }
 
-        .options {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /* margin-bottom no longer needed thanks to form gap */
+        // .options {
+        //     width: 100%;
+        //     display: flex;
+        //     justify-content: space-between;
+        //     align-items: center;
+        //     /* margin-bottom no longer needed thanks to form gap */
 
-            a {
-                text-decoration: none;
-                color: black;
-                font-size: 25px;
-            }
+        //     a {
+        //         text-decoration: none;
+        //         color: black;
+        //         font-size: 25px;
+        //     }
 
-            mat-checkbox {
+        //     mat-checkbox {
 
-                /* this class wraps the text inside the checkbox component */
-                .mat-checkbox-label {
-                    font-size: 30px;
-                }
-            }
+        //         /* this class wraps the text inside the checkbox component */
+        //         .mat-checkbox-label {
+        //             font-size: 30px;
+        //         }
+        //     }
 
-        }
+        // }
 
         .google-button {
             display: flex;
@@ -91,80 +154,48 @@
             justify-content: center;
         }
 
+        .sign-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #2a68c5;
+            border-radius: 10px;
+            color: white;
+            height: 45px;
+            margin-bottom: 50px;
+        }
+
         .google-button img {
             margin-right: 8px;
         }
 
-        .signup-text {
-            font-size: 25px;
-            margin-top: 20px;
+        // .signup-text {
+        //     font-size: 25px;
+        //     margin-top: 20px;
 
-            a {
-                text-decoration: none;
-                color: black;
-                font-size: 25px;
-            }
-        }
+        //     a {
+        //         text-decoration: none;
+        //         color: black;
+        //         font-size: 25px;
+        //     }
+        // }
     }
 
 
     .login-right {
         flex: 1;
-        background: black;
+        background: white;
         color: white;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        // margin-top: 5px;
-        // margin-bottom: 5px;
-        // margin-right: 5px;
-        // border-radius: 10px;
-        // padding: 60px;
+        margin: 20px;
 
-        .welcome {
-            gap: 40px;
-            /* ← space between .s and .chat + between all children */
-
-            h1 {
-                font-size: 32px;
-                margin-bottom: 16px;
-            }
-
-            p {
-                font-size: 16px;
-                margin-bottom: 40px;
-                line-height: 1.5;
-            }
-
-            .s {
-
-                i {
-                    font-size: 150px;
-                }
-            }
-
-            .chat {
-                max-width: 500px;
-
-                .chat-bubble {
-                    background: rgba(255, 255, 255, 0.1);
-                    padding: 16px;
-                    border-radius: 12px;
-                    margin-bottom: 12px;
-                    font-size: 14px;
-
-                    &.user {
-                        background: #1976d2;
-                        text-align: right;
-                        align-self: flex-end;
-                    }
-
-                    &.bot {
-                        align-self: flex-start;
-                    }
-                }
-            }
+        .img {
+            width: 100%;
+            height: 100%;
+            // object-fit: cover; // ✅ makes it cover the entire container without stretching
         }
     }
 }

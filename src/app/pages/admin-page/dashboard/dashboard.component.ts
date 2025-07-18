@@ -23,6 +23,7 @@ import { MediatorModel } from '../../../models/mediator-model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActionModel } from '../../../models/action-model';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { CaseTypeService } from '../../../services/case-type.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -43,6 +44,8 @@ export class DashboardComponent {
   private actionService = inject(ActionService);
   private applicationService = inject(ApplicationService);
   private mediatorService = inject(MediatorService);
+  private casetypeService = inject(CaseTypeService);
+  casetypes = this.casetypeService.casetypes;
   private fb = inject(FormBuilder);
   private snackBar = inject(MatSnackBar);
   @ViewChild('fileInput') fileInput!: ElementRef;
@@ -58,7 +61,6 @@ export class DashboardComponent {
   loadings = false;
   userGroup: string | null = null;
   username: string | null = null;
-
 
   formatDate(date: Date): string {
     return new Date(date).toISOString().split('T')[0]; // "YYYY-MM-DD"
@@ -232,6 +234,7 @@ export class DashboardComponent {
   ngOnInit() {
     this.userGroup = localStorage.getItem('group'); // ✅ Load user group
     this.username = localStorage.getItem('username'); // ✅ Load user group
+    this.casetypeService.loadCaseTypes();
     this.applicationService.loadApplications();
     this.applicationService.loadApplicantCount();
     this.actionService.loadActionCount();

@@ -160,15 +160,41 @@
                 }
 
                 .per {
-                    height: 60px;
+                    height: 80px;
                     border: 1px solid #E4E7EC;
                     border-radius: 10px;
                     color: black;
                     display: flex;
                     align-items: center;
-                    padding-left: 20px;
+                    padding: 0px 20px;
                     font-weight: 500;
+                    flex-direction: row;
+                    justify-content: space-between;
+
                     // margin-bottom: 40px;
+                    .img {
+                        height: 45px;
+                    }
+
+                    .img2 {
+                        height: 25px;
+                    }
+
+                    .pdf {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 10px;
+
+                        .pr {
+
+                            .mb {
+                                color: gray;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+
                 }
             }
 
@@ -1068,6 +1094,7 @@
                 padding: 0px 15px;
 
                 .search {
+                    padding-left: 10px;
                     width: 420px;
                     /* Set width to 80 */
                     height: 40px;
@@ -1086,12 +1113,17 @@
                     /* Center the box in the middle of the page horizontally */
                     border: 1px solid #ccc;
 
+                    .img {
+                        height: 20px;
+                    }
+
                     input {
                         border: none;
                         outline: none;
                         font-size: 14px;
                         width: 100%;
                         padding: 4px 8px;
+
                         background: transparent;
                     }
                 }
@@ -1106,7 +1138,6 @@
                         border: 1px solid #ccc;
                         border-radius: 5px;
                         padding-left: 5px;
-                        // padding-right: 10px;
                     }
                 }
             }
@@ -1163,6 +1194,11 @@
                             display: flex;
                             align-items: center;
                             text-align: center;
+                            gap: 5px;
+
+                            i {
+                                color: #17B26A;
+                            }
 
                             p {
                                 color: #17B26A;
@@ -1175,12 +1211,17 @@
                             width: 75px;
                             height: 36px;
                             border-radius: 8px;
-                            background-color: #FECDCA;
+                            background-color: #fdefee;
                             border: 1px solid #FF7F7F;
                             justify-content: center;
                             display: flex;
                             align-items: center;
                             text-align: center;
+                            gap: 5px;
+
+                            i {
+                                color: #D92D20;
+                            }
 
                             p {
                                 color: #D92D20;
@@ -1533,15 +1574,41 @@
                 }
 
                 .per {
-                    height: 60px;
+                    height: 80px;
                     border: 1px solid #E4E7EC;
                     border-radius: 10px;
                     color: black;
                     display: flex;
                     align-items: center;
-                    padding-left: 20px;
+                    padding: 0px 20px;
                     font-weight: 500;
+                    flex-direction: row;
+                    justify-content: space-between;
+
                     // margin-bottom: 40px;
+                    .img {
+                        height: 45px;
+                    }
+
+                    .img2 {
+                        height: 25px;
+                    }
+
+                    .pdf {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 10px;
+
+                        .pr {
+
+                            .mb {
+                                color: gray;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+
                 }
             }
 

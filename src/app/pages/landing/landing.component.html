@@ -1,68 +1,69 @@
 <div class="login-container">
     <!-- Left Section (Login Form) -->
-    <div class="login-left">
-        <!-- <i class="fa-brands fa-dhl"></i> -->
-        <img class="img" src="assets/images/lac_logo.png" alt="Apartment photo" />
-        <!-- <h1>L.A.C</h1> -->
-        <!-- <h3>Log in</h3> -->
-        <p>Welcome back! Please enter your details.</p>
-
-        <form (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Username</mat-label>
-                <input matInput type="text" name="username" [(ngModel)]="username" matInput placeholder="username*"
-                    required />
-                <mat-error>username is required</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Password</mat-label>
-                <input matInput type="password" name="password" [(ngModel)]="password" matInput placeholder="password*"
-                    required />
-                <mat-error>password is required</mat-error>
-            </mat-form-field>
-
-            <div class="options">
-                <mat-checkbox>Remember me</mat-checkbox>
-                <a href="#">Forgot password</a>
-            </div>
-
-            <button mat-raised-button class="full-j">Sign in</button>
-            <button mat-stroked-button class="full-width google-button">
-                <img src="https://img.icons8.com/color/16/google-logo.png" />
-                Sign in with Google
-            </button>
-            <p *ngIf="error" class="error">{{ error }}</p>
-            <p class="signup-text">
-                Don't have an account? <a href="#">Sign up</a>
-            </p>
-        </form>
-        <mat-progress-bar *ngIf="loading" mode="buffer" color="primary"></mat-progress-bar>
+    <div class="login-right">
+        <img class="img" src="assets/images/sign.png" alt="Apartment photo" />
     </div>
 
     <!-- Right Section (Branding + Chat) -->
-    <div class="login-right">
-        <!-- <div class="welcome">
-            <div class="s">
-                <h1>L.A.C</h1>
-                <i class="fa-brands fa-dhl"></i>
-                <h1>Welcome to Legal Aid Commision</h1>
-                <p>
-                    Effortlessly fill surveys with the power of voice. Simplify data collection, improve response rates,
-                    and
-                    create an engaging experience for your users.
-                </p>
+    <div class="login-left">
+        <div class="head">
+            <img class="img" src="assets/images/lac_logo.png" alt="Apartment photo" />
+            <p>Legal Aid Commission</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()">
+            <div class="one">
+                <h2>Sign in</h2>
+                <p>It's quick and easy to get started.</p>
             </div>
 
-            <div class="chat">
-                <div class="chat-bubble bot">
-                    Hello, this is Soniva, your interviewer. In today's session, we’d like to hear about your experience
-                    with the platform you're currently working with.
+            <div class="two">
+                <!-- <button mat-stroked-button class="full-width google-button">
+                    <img src="https://img.icons8.com/color/16/google-logo.png" />
+                    Sign in with Google
+                </button> -->
+
+                <!-- <div class="vid">
+                    <mat-divider vertical></mat-divider>
+                    <p>or</p>
+                    <mat-divider vertical></mat-divider>
+                </div> -->
+
+                <div class="fields">
+                    <div class="fie">
+                        <label class="input-label">
+                            Username <span class="required">*</span>
+                        </label>
+                        <input type="text" name="username" [(ngModel)]="username" class="custom-input"
+                            placeholder="Enter username" required />
+                    </div>
+
+                    <!-- <mat-error>username is required</mat-error> -->
+                    <div class="fie">
+                        <label class="input-label">
+                            Password <span class="required">*</span>
+                        </label>
+                        <input matInput type="password" name="password" [(ngModel)]="password" class="custom-input"
+                            placeholder="Enter your password" required />
+                    </div>
+
+                    <!-- <mat-error>password is required</mat-error> -->
                 </div>
-                <div class="chat-bubble user">
-                    Yes, I'm ready. Let's go.
-                </div>
+
+
+                <!-- <button mat-raised-button class="full-j">Sign in</button> -->
+                <button mat-stroked-button class="full-width sign-button">
+                    Sign in
+                </button>
             </div>
-        </div>
-    </div> -->
+
+            <p *ngIf="error" class="error">{{ error }}</p>
+            <!-- <p class="signup-text">
+                Don't have an account? <a href="#">Sign up</a>
+            </p> -->
+            <mat-progress-bar *ngIf="loading" mode="buffer" color="primary"></mat-progress-bar>
+
+        </form>
+        <!-- <mat-progress-bar *ngIf="loading" mode="buffer" color="primary"></mat-progress-bar> -->
     </div>
+</div>

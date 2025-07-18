@@ -8,15 +8,22 @@
                 </div>
                 <div class="toolbar">
                     <div class="search">
+                        <img class="img" src="assets/images/search.png" alt="Apartment photo" />
                         <input #inputRef type="text" placeholder="Search by case id, applicant name"
                             class="search-input" (input)="onSearch($event)" (blur)="onBlur(inputRef.value)" autofocus />
                     </div>
                     <div class="dd">
                         <select class="dds">
-                            <option [ngValue]="null">All Case Type</option>
+                            <option [ngValue]="null">All Case Types</option>
+                            <option *ngFor="let casetype of casetypes()" [ngValue]="casetype">
+                                {{ casetype.name }}
+                            </option>
                         </select>
                         <select class="dds">
                             <option [ngValue]="null">All Status</option>
+                            <option *ngFor="let casetype of casetypes()" [ngValue]="casetype">
+                                {{ casetype.name }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -30,6 +37,7 @@
                                 102
                             </h1>
                             <div class="percent">
+                                <i class="fa-solid fa-arrow-trend-up"></i>
                                 <p>
                                     100%
                                 </p>
@@ -48,8 +56,9 @@
                                 {{ applicationCount() }}
                             </h1>
                             <div class="percent2">
+                                <i class="fa-solid fa-arrow-trend-down"></i>
                                 <p>
-                                    2%
+                                    20%
                                 </p>
                             </div>
                         </div>
@@ -67,6 +76,7 @@
                                 {{ actionCount() }}
                             </h1>
                             <div class="percent">
+                                <i class="fa-solid fa-arrow-trend-up"></i>
                                 <p>
                                     100%
                                 </p>
@@ -397,7 +407,14 @@
                         </div>
                     </div>
                     <div class="per">
-                        <p>Police report.pdf</p>
+                        <div class="pdf">
+                            <img class="img" src="assets/images/pdf.png" alt="Apartment photo" />
+                            <div class="pr">
+                                <p>Police report.pdf</p>
+                                <p class="mb">4.9 MB – 100% uploaded</p>
+                            </div>
+                        </div>
+                        <img class="img2" src="assets/images/down.png" alt="Apartment photo" />
                     </div>
                 </div>
                 <div class="end">
