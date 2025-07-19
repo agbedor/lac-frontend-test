@@ -1,18 +1,30 @@
 :host {
-    display: flex;
-    // height: calc(100vh - 60px);
+    display: block;
+    position: relative;
+}
+
+.gradient-bg {
+    position: fixed;
+    /* stays full-screen */
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    /* Navbar only */
-    // background-color: #F9FDFF;
-    // background: linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 10%, #3070D1 100%);
-    background: linear-gradient(to bottom, #FFFFFF 0vh, #3070D1 100vh);
-    // margin-bottom: 30px;
+    background: linear-gradient(to bottom, #FFFFFF 20%, #3070D1 100%);
+    z-index: -1;
+    /* stays behind everything */
+}
+
+.dashboard-content {
+    position: relative;
+    z-index: 1;
 }
 
 .manager-wrapper,
 .mediator-wrapper {
     width: 100%;
-    display: block;
+    min-height: 100vh;
+    // display: block;
 }
 
 
@@ -1424,12 +1436,14 @@
     }
 
     .detail-container {
+        height: 100vh;
         padding: 20px 150px;
         width: 100%;
         box-sizing: border-box;
         gap: 30px;
         display: flex;
         flex-direction: column;
+        // height: 100vh;
 
 
         .head {
