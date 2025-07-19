@@ -1,6 +1,6 @@
 .login-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: row;
 
     .login-left {
@@ -181,21 +181,29 @@
         // }
     }
 
-
     .login-right {
         flex: 1;
-        background: white;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        background: url("/assets/images/sign.png") no-repeat center center;
+        background-size: cover;
+        border-radius: 20px;
         margin: 20px;
+      }      
+      
 
-        .img {
-            width: 100%;
-            height: 100%;
-            // object-fit: cover; // ✅ makes it cover the entire container without stretching
-        }
-    }
+
+    // .login-right {
+    //     flex: 1;
+    //     background: white;
+    //     color: white;
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: center;
+    //     align-items: center;
+    //     margin: 20px;
+
+    //     .img {
+    //         width: 100%;
+    //         height: 100%;
+    //     }
+    // }
 }
