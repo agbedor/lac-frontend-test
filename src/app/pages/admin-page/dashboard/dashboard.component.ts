@@ -354,7 +354,7 @@ export class DashboardComponent {
         // ✅ Now update status after action is created
         this.applicationService
           .updateApplication(this.selectedApp.id, {
-            status: 'in progress',
+            status: 'In Progress',
           })
           .subscribe({
             next: () => {
