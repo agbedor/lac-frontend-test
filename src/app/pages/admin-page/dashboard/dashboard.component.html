@@ -11,9 +11,8 @@
                     <div class="toolbar">
                         <div class="search">
                             <img class="img" src="assets/images/search.png" alt="Apartment photo" />
-                            <input #inputRef type="text" placeholder="Search by case id, applicant name"
-                                class="search-input" (input)="onSearch($event)" (blur)="onBlur(inputRef.value)"
-                                autofocus />
+                            <input #inputRef type="text" placeholder="Search by case number, applicant name"
+                                class="search-input" (input)="onSearch($event)" autofocus />
                         </div>
                         <div class="dd">
                             <select class="dds">
@@ -22,11 +21,13 @@
                                     {{ casetype.name }}
                                 </option>
                             </select>
-                            <select class="dds">
-                                <option [ngValue]="null">All Status</option>
-                                <option *ngFor="let casetype of casetypes()" [ngValue]="casetype">
-                                    {{ casetype.name }}
-                                </option>
+                            <select class="dds" [(ngModel)]="selectedStatus"
+                                (change)="filterApplications(selectedStatus)">
+                                <option value="all">All Status</option>
+                                <option value="accepted">Accepted</option>
+                                <option value="rejected">Rejected</option>
+                                <option value="in progress">In Progress</option>
+                                <option value="completed">Completed</option>
                             </select>
                         </div>
                     </div>
@@ -37,12 +38,11 @@
                             <p>Total Applications</p>
                             <div class="count">
                                 <h1>
-                                    102
-                                </h1>
-                                <div class="percent">
-                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                    {{ applicationCount() }} </h1>
+                                <div class="percent2">
+                                    <i class="fa-solid fa-arrow-trend-down"></i>
                                     <p>
-                                        100%
+                                        7%
                                     </p>
                                 </div>
                             </div>
@@ -53,10 +53,29 @@
                     </div>
                     <div class="card">
                         <div class="main">
-                            <p>Approved</p>
+                            <p>Accepted</p>
                             <div class="count">
                                 <h1>
-                                    {{ applicationCount() }}
+                                    {{ accCount() }}
+                                </h1>
+                                <div class="percent">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                    <p>
+                                        70%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="side">
+                            <p>From Jan 01 2025 - July 10 2025</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="main">
+                            <p>In Progress</p>
+                            <div class="count">
+                                <h1>
+                                    {{ inpCount() }}
                                 </h1>
                                 <div class="percent2">
                                     <i class="fa-solid fa-arrow-trend-down"></i>
@@ -72,11 +91,11 @@
                     </div>
                     <div class="card">
                         <div class="main">
-                            <p>Pending Review
+                            <p>Completed
                             </p>
                             <div class="count">
                                 <h1>
-                                    {{ actionCount() }}
+                                    {{ compCount() }}
                                 </h1>
                                 <div class="percent">
                                     <i class="fa-solid fa-arrow-trend-up"></i>
@@ -91,13 +110,91 @@
                         </div>
                     </div>
                 </section>
+                <!-- <section class="body">
+                    <div class="card total-card">
+                        <div class="main">
+                            <p>Total Applications</p>
+                            <div class="count">
+                                <h1>
+                                    {{ applicationCount() }} </h1>
+                                <div class="percent2">
+                                    <i class="fa-solid fa-arrow-trend-down"></i>
+                                    <p>
+                                        7%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="side">
+                            <p>From Jan 01 2025 - July 10 2025</p>
+                        </div>
+                    </div>
+                    <div class="card accepted-card">
+                        <div class="main">
+                            <p style="color: green;">Accepted</p>
+                            <div class="count">
+                                <h1>
+                                    {{ accCount() }}
+                                </h1>
+                                <div class="percent">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                    <p>
+                                        70%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="side">
+                            <p>From Jan 01 2025 - July 10 2025</p>
+                        </div>
+                    </div>
+                    <div class="card progress-card">
+                        <div class="main">
+                            <p style="color: orangered;">In Progress</p>
+                            <div class="count">
+                                <h1>
+                                    {{ inpCount() }}
+                                </h1>
+                                <div class="percent2">
+                                    <i class="fa-solid fa-arrow-trend-down"></i>
+                                    <p>
+                                        20%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="side">
+                            <p>From Jan 01 2025 - July 10 2025</p>
+                        </div>
+                    </div>
+                    <div class="card completed-card">
+                        <div class="main">
+                            <p style="color: blue;">Completed
+                            </p>
+                            <div class="count">
+                                <h1>
+                                    {{ compCount() }}
+                                </h1>
+                                <div class="percent">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                    <p>
+                                        100%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="side">
+                            <p>From Jan 01 2025 - July 10 2025</p>
+                        </div>
+                    </div>
+                </section> -->
                 <section class="tail">
                     <div class="header">
                         <p>
-                            Case Number
+                            Applicant Name
                         </p>
                         <p>
-                            Applicant Name
+                            Case Number
                         </p>
                         <p>
                             Type
@@ -124,17 +221,16 @@
                         <ng-container *ngIf="!loading()">
                             <ng-container *ngIf="displayedApps().length > 0; else noData">
                                 <div class="app" *ngFor="let app of displayedApps()">
-                                    <p>{{ app.id }}</p>
                                     <p>{{ app.title?.name }} {{ app.first_name }} {{ app.last_name }}</p>
+                                    <p>{{ app.id }}</p>
                                     <div class="type">
                                         <p [class]="app.case.case_type.name.toLowerCase()">
                                             {{ app.case.case_type.name }}
                                         </p>
                                     </div>
-
                                     <div class="status">
-                                        <p [class]="app.case.status.toLowerCase().replace(' ', '-')">
-                                            {{ app.case.status }}
+                                        <p [class]="app.status.toLowerCase().replace(' ', '-')">
+                                            {{ app.status }}
                                         </p>
                                     </div>
                                     <p>{{ app.case.created_at | date:"yyyy-MM-dd 'at' hh:mm a" }}</p>
@@ -151,10 +247,12 @@
                     <mat-divider></mat-divider>
                     <div class="footer">
                         <div class="bns">
-                            <button class="btns" matTooltip="Previous" matStepperPrevious>
+                            <button class="btns" matTooltip="Previous" (click)="onPrev()"
+                                [disabled]="applicationService.currentPage === 1">
                                 Previous
                             </button>
-                            <button class="btn" matTooltip="Previous" matStepperPrevious>
+                            <button class="btn" matTooltip="Next" (click)="onNext()"
+                                [disabled]="applicationService.applications().length < applicationService.pageSize">
                                 Next
                             </button>
                         </div>
@@ -182,14 +280,12 @@
                                 PV-CAS-1509C4 {{ selectedApp.id }}
                             </h1>
                             <p>
-                                Arlene McCoy
+                                {{ selectedApp.title?.name }} {{ selectedApp.first_name }} {{ selectedApp.last_name }}
                             </p>
                         </div>
                         <div class="ac">
                             <p>Submitted On:</p>
-                            <p>
-                                2020-05-05 10:21:13
-                            </p>
+                            <p>{{ selectedApp.case.created_at | date:"yyyy-MM-dd 'at' hh:mm a" }}</p>
                         </div>
                     </div>
                 </section>
@@ -408,7 +504,7 @@
                                 <label class="input-label">
                                     Case Summary
                                 </label>
-                                <input type="text" value="{{ selectedApp.case.case_summary}}" class="custom-inputs"
+                                <input type="text" value="{{selectedApp.case.case_summary}}" class="custom-inputs"
                                     readonly />
                             </div>
                         </div>
@@ -416,15 +512,16 @@
                             <div class="pdf">
                                 <img class="img" src="assets/images/pdf.png" alt="Apartment photo" />
                                 <div class="pr">
-                                    <p>Police report.pdf</p>
-                                    <p class="mb">4.9 MB – 100% uploaded</p>
+                                    <p>{{ selectedApp?.document ? (selectedApp.document | filename) : 'No File
+                                        Available' }}</p>
+                                    <!-- <p class="mb">4.9 MB – 100% uploaded</p> -->
                                 </div>
                             </div>
                             <img class="img2" src="assets/images/down.png" alt="Apartment photo" />
                         </div>
                     </div>
                     <div class="end">
-                        <button class="btns" matTooltip="Previous" *ngIf="selectedApp.case.status === 'pending'"
+                        <button class="btns" matTooltip="Previous" *ngIf="selectedApp.status === 'accepted'"
                             (click)="enableActionMode(selectedApp)">
                             Take Action
                         </button>
@@ -452,7 +549,7 @@
                                     </div>
                                     <div>
                                         <label class="input-label">
-                                            Official Name <span class="required">*</span>
+                                            Official Name
                                         </label>
                                         <input type="text" value="Edmund Foley Esq." class="custom-input" readonly />
                                     </div>
@@ -521,12 +618,12 @@
                                             Required.
                                         </div>
                                     </div>
-                                    <div>
+                                    <!-- <div>
                                         <label class="input-label">
                                             Date Assigned <span class="required">*</span>
                                         </label>
                                         <input type="text" placeholder="2020-05-05" class="custom-input" required />
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="form-row">
                                     <div>
@@ -627,39 +724,39 @@
                         </div>
                     </div>
                     <div class="crow">
-                        <div class="card">
+                        <div class="card total-card">
                             <img class="img" src="assets/images/doc.png" alt="Apartment photo" />
                             <div class="main">
                                 <p class="tot">Total Cases</p>
-                                <p class="count">
-                                    21
-                                </p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="img" src="assets/images/open.png" alt="Apartment photo" />
-                            <div class="main">
-                                <p class="tot">Open</p>
                                 <p class="count">
                                     {{ applicationCount() }}
                                 </p>
                             </div>
                         </div>
-                        <div class="card">
-                            <img class="img" src="assets/images/prog.png" alt="Apartment photo" />
+                        <div class="card accepted-card">
+                            <img class="img" src="assets/images/open.png" alt="Apartment photo" />
                             <div class="main">
-                                <p class="tot">In Progress</p>
+                                <p class="tot" style="color: green;">Accepted</p>
                                 <p class="count">
-                                    5
+                                    {{ accCount() }}
                                 </p>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card progress-card">
+                            <img class="img" src="assets/images/prog.png" alt="Apartment photo" />
+                            <div class="main">
+                                <p class="tot" style="color: orangered;">In Progress</p>
+                                <p class="count">
+                                    {{ inpCount() }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card completed-card">
                             <img class="img" src="assets/images/com.png" alt="Apartment photo" />
                             <div class="main">
-                                <p class="tot">Completed</p>
+                                <p class="tot" style="color: blue;">Completed</p>
                                 <p class="count">
-                                    {{ actionCount() }}
+                                    {{ compCount() }}
                                 </p>
                             </div>
                         </div>
@@ -669,29 +766,12 @@
                     <div class="toolbar">
                         <h3>My Assigned Cases</h3>
                         <div class="stat">
-                            <div class="boxs">
-                                <p>
-                                    All
-                                </p>
-                            </div>
-                            <div class="box">
-                                <p>
-                                    Open
-                                </p>
-                            </div>
-                            <div class="box">
-                                <p>
-                                    In Progress
-                                </p>
-                            </div>
-                            <div class="box">
-                                <p>
-                                    Completed
-                                </p>
+                            <div *ngFor="let status of statusOptions" (click)="filterApplications(status.value)"
+                                [ngClass]="status.value === selectedStatus ? 'boxs' : 'box'">
+                                <p>{{ status.label }}</p>
                             </div>
                         </div>
                     </div>
-
                 </section>
                 <section class="tail">
                     <div class="header">
@@ -735,8 +815,8 @@
                                     </div>
 
                                     <div class="status">
-                                        <p [class]="app.case.status.toLowerCase().replace(' ', '-')">
-                                            {{ app.case.status }}
+                                        <p [class]="app.status.toLowerCase().replace(' ', '-')">
+                                            {{ app.status }}
                                         </p>
                                     </div>
                                     <p>{{ app.case.created_at | date:"yyyy-MM-dd" }}</p>
@@ -754,10 +834,12 @@
                     <mat-divider></mat-divider>
                     <div class="footer">
                         <div class="bns">
-                            <button class="btns" matTooltip="Previous" matStepperPrevious>
+                            <button class="btns" matTooltip="Previous" (click)="onPrev()"
+                                [disabled]="applicationService.currentPage === 1">
                                 Previous
                             </button>
-                            <button class="btn" matTooltip="Previous" matStepperPrevious>
+                            <button class="btn" matTooltip="Next" (click)="onNext()"
+                                [disabled]="applicationService.applications().length < applicationService.pageSize">
                                 Next
                             </button>
                         </div>
@@ -785,14 +867,12 @@
                                 PV-CAS-1509C4 {{ selectedApp.id }}
                             </h1>
                             <p>
-                                Arlene McCoy
+                                {{ selectedApp.title?.name }} {{ selectedApp.first_name }} {{ selectedApp.last_name }}
                             </p>
                         </div>
                         <div class="ac">
                             <p>Submitted On:</p>
-                            <p>
-                                2020-05-05 10:21:13
-                            </p>
+                            <p>{{ selectedApp.case.created_at | date:"yyyy-MM-dd 'at' hh:mm a" }}</p>
                         </div>
                     </div>
                 </section>
@@ -1087,12 +1167,11 @@
                                             </label>
                                             <input type="text"
                                                 placeholder="Add detailed remarks, notes, or instructions"
-                                                class="customs-inputs" required formControlName="remarksCtrl"
-                                                required />
-                                            <div class="error"
+                                                class="customs-inputs" required />
+                                            <!-- <div class="error"
                                                 *ngIf="actionFormGroup.get('remarksCtrl')?.touched && actionFormGroup.get('remarksCtrl')?.invalid">
                                                 Required.
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="form-row">

@@ -23,7 +23,7 @@
 .manager-wrapper,
 .mediator-wrapper {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     // display: block;
 }
 
@@ -291,14 +291,16 @@
                     flex: 1;
                     background-color: white;
                     border-radius: 15px;
-                    border: 1px solid #E4E7EC;
+                    border: 1px solid;
                     display: flex;
                     flex-direction: row;
                     padding-left: 30px;
                     padding-right: 30px;
                     gap: 30px;
                     align-items: center;
+
                     // height: 120px;
+
 
                     .main {
                         // background-color: red;
@@ -325,55 +327,21 @@
                     }
                 }
 
-                // .card {
-                //     flex: 1;
-                //     background-color: white;
-                //     border-radius: 15px;
-                //     border: 1px solid #E4E7EC;
-                //     display: flex;
-                //     flex-direction: row;
-                //     padding: 20px 30px;
-                //     gap: 20px;
-                //     align-items: center;
-                //     height: 100px; // Set a fixed height for consistency
+                .total-card {
+                    border-color: black;
+                }
 
-                //     .img {
-                //         height: 50px;
-                //         width: 50px; // Set width to maintain aspect ratio
-                //         flex-shrink: 0; // Prevent image from shrinking
-                //     }
+                .accepted-card {
+                    border-color: green;
+                }
 
-                //     .main {
-                //         display: flex;
-                //         flex-direction: column;
-                //         justify-content: center;
-                //         flex: 1;
+                .progress-card {
+                    border-color: orangered;
+                }
 
-                //         .tot {
-                //             color: #6B7280; // Slightly muted color for label
-                //             font-size: 14px;
-                //             font-weight: 500;
-                //             margin: 0;
-                //             margin-bottom: 8px;
-                //         }
-
-                //         .count {
-                //             color: #111827; // Darker color for the number
-                //             font-size: 32px;
-                //             font-weight: bold;
-                //             margin: 0;
-                //             line-height: 1;
-                //         }
-
-                //         h1 {
-                //             color: #111827;
-                //             font-size: 32px;
-                //             font-weight: bold;
-                //             margin: 0;
-                //             line-height: 1;
-                //         }
-                //     }
-                // }
+                .completed-card {
+                    border-color: blue;
+                }
 
             }
         }
@@ -513,27 +481,29 @@
                             margin: 0;
 
                             // Status-specific colors
-                            &.pending {
+                            &.in-progress {
                                 background-color: #FFFAEB;
                                 color: #B54708;
                                 border: 1px solid #FEDF89;
                             }
 
-                            &.action-taken {
+                            &.rejected {
+                                background-color: #fdefee;
+                                color: #D92D20;
+                                border: 1px solid #FF7F7F;
+                            }
+
+                            &.completed {
+                                background-color: rgb(84, 84, 248);
+                                color: rgb(30, 30, 228);
+                                border: 1px solid rgb(76, 76, 251);
+                            }
+
+                            &.accepted {
                                 background-color: #ECFDF3;
                                 color: #067647;
                                 border: 1px solid #ABEFC6;
                             }
-
-                            // &.declined {
-                            //     background-color: #ffebee;
-                            //     color: #d32f2f;
-                            // }
-
-                            // &.in-progress {
-                            //     background-color: #e3f2fd;
-                            //     color: #1976d2;
-                            // }
                         }
                     }
 
@@ -547,6 +517,8 @@
                         align-items: center;
                         flex: 1;
                         cursor: pointer;
+                        color: #1E1E1E;
+                        font-size: 20px;
                     }
                 }
 
@@ -1083,8 +1055,6 @@
         flex-direction: column;
 
         .head {
-            // background-color: blue;
-            // flex: 1;
             gap: 10px;
             display: flex;
             flex-direction: column;
@@ -1148,10 +1118,16 @@
 
                     .dds {
                         height: 40px;
-                        width: 180px;
+                        width: 200px;
                         border: 1px solid #ccc;
                         border-radius: 5px;
-                        padding-left: 5px;
+                        padding-left: 10px;
+                        // padding: 0 36px 0 12px; // add right padding for dropdown icon
+                        appearance: none; // optional: remove native style for full control (you'll need a custom arrow icon)
+                        background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='gray' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+                        background-repeat: no-repeat;
+                        background-position: right 12px center;
+                        cursor: pointer;
                     }
                 }
             }
@@ -1168,9 +1144,10 @@
                 flex: 1;
                 background-color: white;
                 border-radius: 15px;
-                border: 1px solid #E4E7EC;
+                border: 1px solid #3070D1;
                 display: flex;
                 flex-direction: column;
+                background-color: #1018280D;
 
                 .main {
                     flex: 2;
@@ -1260,6 +1237,22 @@
                     }
                 }
             }
+
+            .total-card {
+                border-color: black;
+            }
+
+            .accepted-card {
+                border-color: green;
+            }
+
+            .progress-card {
+                border-color: orangered;
+            }
+
+            .completed-card {
+                border-color: blue;
+            }
         }
 
         .tail {
@@ -1338,27 +1331,29 @@
                             margin: 0;
 
                             // Status-specific colors
-                            &.pending {
+                            &.in-progress {
                                 background-color: #FFFAEB;
                                 color: #B54708;
                                 border: 1px solid #FEDF89;
                             }
 
-                            &.action-taken {
+                            &.rejected {
+                                background-color: #fdefee;
+                                color: #D92D20;
+                                border: 1px solid #FF7F7F;
+                            }
+
+                            &.completed {
+                                background-color: rgb(84, 84, 248);
+                                color: rgb(30, 30, 228);
+                                border: 1px solid rgb(76, 76, 251);
+                            }
+
+                            &.accepted {
                                 background-color: #ECFDF3;
                                 color: #067647;
                                 border: 1px solid #ABEFC6;
                             }
-
-                            // &.declined {
-                            //     background-color: #ffebee;
-                            //     color: #d32f2f;
-                            // }
-
-                            // &.in-progress {
-                            //     background-color: #e3f2fd;
-                            //     color: #1976d2;
-                            // }
                         }
                     }
 
@@ -1372,6 +1367,8 @@
                         align-items: center;
                         flex: 1;
                         cursor: pointer;
+                        color: #1E1E1E;
+                        font-size: 20px;
                     }
                 }
 
@@ -1436,7 +1433,7 @@
     }
 
     .detail-container {
-        height: 100vh;
+        // height: 100vh;
         padding: 20px 150px;
         width: 100%;
         box-sizing: border-box;

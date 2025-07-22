@@ -1,9 +1,16 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { tap } from 'rxjs/operators';
 import { ApplicantModel } from '../models/applicant-model';
 import { Observable } from 'rxjs';
+
+export interface PaginatedResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +21,14 @@ export class ApplicationService {
   applications = signal<ApplicantModel[]>([]);
   loading = signal(true);
   applicantCount = signal<number>(0);
+  acceptedCount = signal<number>(0);
+  rejectedCount = signal<number>(0);
+  inProgressCount = signal<number>(0);
+  completedCount = signal<number>(0);
+  currentPage = 1;
+  pageSize = 5;
+  currentSearch = signal<string | null>(null);
+  currentStatus = signal<string | null>(null); // NEW
 
   createApplication(application: ApplicantModel): Observable<ApplicantModel> {
     return this.http
@@ -28,101 +43,193 @@ export class ApplicationService {
       );
   }
 
-  // Method to fetch and update the signal
-  loadApplications() {
-    this.http
-      .get<ApplicantModel[]>(`${this.url}/api/applications/`)
-      .pipe(
-        tap((applications) => this.applications.set(applications)),
-        tap(() => this.loading.set(false))
+  updateApplication(appId: number, appData: Partial<ApplicantModel>) {
+    return this.http
+      .patch<ApplicantModel>(
+        `${this.url}/api/applications/${appId}/update/`,
+        appData
       )
-      .subscribe();
+      .pipe(
+        tap((updatedApplication) => {
+          const currentApplications = this.applications();
+          const updatedList = currentApplications.map((c) =>
+            c.id === updatedApplication.id ? updatedApplication : c
+          );
+          this.applications.set(updatedList);
+        })
+      );
   }
 
   // Fetch the count from the backend
   loadApplicantCount() {
     this.http
-      .get<{ count: number }>(`${this.url}/api/applications/count/`)
-      .pipe(tap((response) => this.applicantCount.set(response.count)))
+      .get<{
+        accepted: number;
+        rejected: number;
+        in_progress: number;
+        completed: number;
+        total: number;
+      }>(`${this.url}/api/applications/count/`)
+      .pipe(
+        tap((response) => {
+          // Assuming you have signals or properties for each count
+          this.acceptedCount.set(response.accepted);
+          this.rejectedCount.set(response.rejected);
+          this.inProgressCount.set(response.in_progress);
+          this.completedCount.set(response.completed);
+          this.applicantCount.set(response.total);
+        })
+      )
       .subscribe();
   }
 
-  // searchApplicantsSmart(term: string): void {
-  //   const params: any = {};
-
-  //   if (/^\d+$/.test(term)) {
-  //     params.id = term;
-  //   } else if (term.includes('gender=')) {
-  //     params.gender = term.split('=')[1];
-  //   } else if (term.includes('marital_status=')) {
-  //     params.marital_status = term.split('=')[1];
-  //   } else if (term.includes('employment_status=')) {
-  //     params.employment_status = term.split('=')[1];
-  //   } else if (term.startsWith('first:')) {
-  //     params.first_name = term.replace('first:', '').trim();
-  //   } else if (term.startsWith('last:')) {
-  //     params.last_name = term.replace('last:', '').trim();
-  //   } else {
-  //     // fallback to search both first_name and last_name
-  //     params.first_name = term;
-  //     params.last_name = term;
-  //   }
-
-  //   this.loading.set(true);
-
-  //   this.http
-  //     .get<ApplicantModel[]>(`${this.url}/api/applications/`, { params })
-  //     .pipe(
-  //       tap((apps) => this.applications.set(apps)),
-  //       tap(() => this.loading.set(false))
-  //     )
-  //     .subscribe();
-  // }
-
-  searchApplicants(term: string) {
-    const params: any = {};
-
-    if (/^\d+$/.test(term)) {
-      params.id = term;
-    } else {
-      params.first_name = term;
-      params.last_name = term;
-    }
-
-    // const params: any = {};
-
-    // if (/^\d+$/.test(term)) {
-    //   params.id = term;
-    // } else {
-    //   // Try to match either first_name or last_name
-    //   params.first_name = term;
-    // } 
-
+  loadApplications(page = this.currentPage, pageSize = this.pageSize) {
     this.loading.set(true);
 
-    return this.http
-      .get<ApplicantModel[]>(`${this.url}/api/applications/`, { params })
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('page_size', pageSize.toString());
+
+    this.http
+      .get<PaginatedResponse<ApplicantModel>>(`${this.url}/api/applications/`, {
+        params,
+      })
       .pipe(
-        tap((apps) => this.applications.set(apps)),
+        tap((resp) => this.applications.set(resp.results)),
+        tap(() => this.loading.set(false))
+      )
+      .subscribe();
+  }
+
+  onNextAll() {
+    this.currentPage++;
+    const search = this.currentSearch();
+    const status = this.currentStatus();
+
+    if (search) {
+      this.searchApplicants(
+        search,
+        status,
+        this.currentPage,
+        this.pageSize
+      ).subscribe();
+    } else if (status && status !== 'all') {
+      this.loadApplicationsByStatus(status, this.currentPage, this.pageSize);
+    } else {
+      this.loadApplications(this.currentPage, this.pageSize);
+    }
+  }
+
+  onPrevAll() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      const search = this.currentSearch();
+      const status = this.currentStatus();
+
+      if (search) {
+        this.searchApplicants(
+          search,
+          status,
+          this.currentPage,
+          this.pageSize
+        ).subscribe();
+      } else if (status && status !== 'all') {
+        this.loadApplicationsByStatus(status, this.currentPage, this.pageSize);
+      } else {
+        this.loadApplications(this.currentPage, this.pageSize);
+      }
+    }
+  }
+
+  onNextFiltered(status: string) {
+    this.currentPage++;
+    const search = this.currentSearch();
+    if (search) {
+      this.searchApplicants(
+        search,
+        status === 'all' ? null : status,
+        this.currentPage,
+        this.pageSize
+      ).subscribe();
+    } else {
+      this.loadApplicationsByStatus(status, this.currentPage, this.pageSize);
+    }
+  }
+
+  onPrevFiltered(status: string) {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      const search = this.currentSearch();
+      if (search) {
+        this.searchApplicants(
+          search,
+          status === 'all' ? null : status,
+          this.currentPage,
+          this.pageSize
+        ).subscribe();
+      } else {
+        this.loadApplicationsByStatus(status, this.currentPage, this.pageSize);
+      }
+    }
+  }
+
+  searchApplicants(
+    term: string,
+    status: string | null = null,
+    page = 1,
+    pageSize = this.pageSize
+  ) {
+    this.loading.set(true);
+    this.currentSearch.set(term);
+
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('page_size', pageSize.toString());
+
+    if (/^\d+$/.test(term)) {
+      params = params.set('id', term);
+    } else {
+      params = params.set('name', term);
+    }
+
+    // ✅ Only set status if it's NOT "all"
+    if (status && status !== 'all') {
+      params = params.set('status', status);
+    }
+
+    return this.http
+      .get<PaginatedResponse<ApplicantModel>>(`${this.url}/api/applications/`, {
+        params,
+      })
+      .pipe(
+        tap((resp) => this.applications.set(resp.results)),
         tap(() => this.loading.set(false))
       );
   }
 
-  filterApplicants(filters: {
-    gender?: number;
-    employment_status?: number;
-    marital_status?: number;
-  }): void {
-    const params: any = { ...filters };
-
+  loadApplicationsByStatus(
+    status: string, // <-- changed from union
+    page: number = this.currentPage,
+    pageSize: number = this.pageSize
+  ) {
     this.loading.set(true);
 
+    const params = new HttpParams()
+      .set('status', status)
+      .set('page', page.toString())
+      .set('page_size', pageSize.toString());
+
     this.http
-      .get<ApplicantModel[]>(`${this.url}/api/applications/`, { params })
+      .get<{ count: number; results: ApplicantModel[] }>(
+        `${this.url}/api/applications/`,
+        { params }
+      )
       .pipe(
-        tap((apps) => this.applications.set(apps)),
+        tap((resp) => this.applications.set(resp.results)),
         tap(() => this.loading.set(false))
       )
-      .subscribe();
+      .subscribe({
+        error: () => this.loading.set(false),
+      });
   }
 }

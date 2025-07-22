@@ -23,6 +23,9 @@ export interface ApplicantModel {
   children?: number;
   employment_status_id: number;
   marital_status_id: number;
+  signature: string;
+  document?: string;
+  status: string;
   case: CaseModel;
   work?: WorkModel;
   spouse?: SpouseModel;

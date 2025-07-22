@@ -134,16 +134,16 @@ export class CasesComponent {
   }
 
   createDialog(cases: CaseModel): void {
-    if (cases.status !== 'pending') {
-      return;
-    }
+    // if (cases.status !== 'pending') {
+    //   return;
+    // }
 
-    this.dialog.open(CaseFormComponent, {
-      width: '800px',
-      height: '800px',
-      data: { case: cases },
-      disableClose: false,
-    });
+    // this.dialog.open(CaseFormComponent, {
+    //   width: '800px',
+    //   height: '800px',
+    //   data: { case: cases },
+    //   disableClose: false,
+    // });
   }
 
   ngOnInit() {

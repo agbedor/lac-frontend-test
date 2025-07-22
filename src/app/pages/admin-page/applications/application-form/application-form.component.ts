@@ -610,6 +610,8 @@ export class ApplicationFormComponent implements OnInit, OnDestroy {
       work: workModel,
       spouse: spouseModel,
       representative: repModel,
+      signature: '',
+      status: ''
     };
     console.log('Application Payload:', JSON.stringify(appData, null, 2));
     this.loading = true;

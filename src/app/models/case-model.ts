@@ -12,6 +12,5 @@ export interface CaseModel {
   number_of_times?: number;
   previous_case_number?: string;
   opponent: OpponentModel;
-  status?: string;
   case_summary: string;
 }

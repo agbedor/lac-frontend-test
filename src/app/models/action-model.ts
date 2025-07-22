@@ -1,6 +1,6 @@
 export interface ActionModel {
   id?: number;
-  case: number;
+  applicant: number;
   completed_by_id: number;
   action_taken: string;
   remarks: string;

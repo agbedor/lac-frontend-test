@@ -56,3 +56,30 @@ i:hover {
   height: 40px;
   // width: auto;
 }
+
+.footer {
+  display: flex;
+  background-color: white;
+  height: 100px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 100px;
+
+  p {
+    font-weight: 400;
+    color: #4F4D55;
+    font-size: 15px;
+  }
+
+  a {
+    font-weight: 400;
+    color: blue;
+    font-size: 15px;
+  }
+
+  .last {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+}
