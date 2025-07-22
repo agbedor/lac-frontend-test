@@ -224,12 +224,12 @@
                                     <p>{{ app.title?.name }} {{ app.first_name }} {{ app.last_name }}</p>
                                     <p>{{ app.id }}</p>
                                     <div class="type">
-                                        <p [class]="app.case.case_type.name.toLowerCase()">
+                                        <p [class]="app.case.case_type.name">
                                             {{ app.case.case_type.name }}
                                         </p>
                                     </div>
                                     <div class="status">
-                                        <p [class]="app.status.toLowerCase().replace(' ', '-')">
+                                        <p [class]="app.status.replace(' ', '-')">
                                             {{ app.status }}
                                         </p>
                                     </div>
@@ -809,13 +809,12 @@
                                     <p>{{ app.id }}</p>
                                     <p>{{ app.title?.name }} {{ app.first_name }} {{ app.last_name }}</p>
                                     <div class="type">
-                                        <p [class]="app.case.case_type.name.toLowerCase()">
+                                        <p [class]="app.case.case_type.name">
                                             {{ app.case.case_type.name }}
                                         </p>
                                     </div>
-
                                     <div class="status">
-                                        <p [class]="app.status.toLowerCase().replace(' ', '-')">
+                                        <p [class]="app.status.replace(' ', '-')">
                                             {{ app.status }}
                                         </p>
                                     </div>

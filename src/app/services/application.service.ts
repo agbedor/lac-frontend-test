@@ -64,19 +64,19 @@ export class ApplicationService {
   loadApplicantCount() {
     this.http
       .get<{
-        accepted: number;
-        rejected: number;
-        in_progress: number;
-        completed: number;
+        Accepted: number;
+        Rejected: number;
+        In_Progress: number;
+        Completed: number;
         total: number;
       }>(`${this.url}/api/applications/count/`)
       .pipe(
         tap((response) => {
           // Assuming you have signals or properties for each count
-          this.acceptedCount.set(response.accepted);
-          this.rejectedCount.set(response.rejected);
-          this.inProgressCount.set(response.in_progress);
-          this.completedCount.set(response.completed);
+          this.acceptedCount.set(response.Accepted);
+          this.rejectedCount.set(response.Rejected);
+          this.inProgressCount.set(response.In_Progress);
+          this.completedCount.set(response.Completed);
           this.applicantCount.set(response.total);
         })
       )
