@@ -27,6 +27,13 @@
     // display: block;
 }
 
+#spin {
+    color: black;
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .error {
     color: rgb(253, 82, 82);
@@ -494,9 +501,9 @@
                             }
 
                             &.Completed {
-                                background-color: rgb(84, 84, 248);
+                                background-color: #d3e5ff;
                                 color: rgb(30, 30, 228);
-                                border: 1px solid rgb(76, 76, 251);
+                                border: 1px solid #3070D1;
                             }
 
                             &.Accepted {
@@ -1331,7 +1338,7 @@
                             margin: 0;
 
                             // Status-specific colors
-                            &.In\ Progress {
+                            &.In-Progress {
                                 background-color: #FFFAEB;
                                 color: #B54708;
                                 border: 1px solid #FEDF89;
@@ -1344,9 +1351,9 @@
                             }
 
                             &.Completed {
-                                background-color: rgb(84, 84, 248);
+                                background-color: #d3e5ff;
                                 color: rgb(30, 30, 228);
-                                border: 1px solid rgb(76, 76, 251);
+                                border: 1px solid #3070D1;
                             }
 
                             &.Accepted {
@@ -1606,6 +1613,7 @@
 
                     .img2 {
                         height: 25px;
+                        cursor: pointer;
                     }
 
                     .pdf {

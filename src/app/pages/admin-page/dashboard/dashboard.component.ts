@@ -9,7 +9,6 @@ import {
   distinctUntilChanged,
   switchMap,
   catchError,
-  filter,
 } from 'rxjs/operators';
 import { BehaviorSubject, of } from 'rxjs';
 import {
@@ -26,6 +25,8 @@ import { ActionModel } from '../../../models/action-model';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { CaseTypeService } from '../../../services/case-type.service';
 import { FilenamePipe } from '../../../filename.pipe';
+import { SupabaseService } from '../../../services/supabase.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 type StatusType = 'all' | 'accepted' | 'rejected' | 'in progress' | 'completed';
 
@@ -39,21 +40,23 @@ type StatusType = 'all' | 'accepted' | 'rejected' | 'in progress' | 'completed';
     NgxMaskDirective,
     ReactiveFormsModule,
     FilenamePipe,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   providers: [provideNgxMask()],
 })
 export class DashboardComponent {
+  private fb = inject(FormBuilder);
+  private snackBar = inject(MatSnackBar);
+  @ViewChild('fileInput') fileInput!: ElementRef;
   private caseService = inject(CaseService);
   private actionService = inject(ActionService);
   public applicationService = inject(ApplicationService);
   private mediatorService = inject(MediatorService);
   private casetypeService = inject(CaseTypeService);
+  private supabaseService = inject(SupabaseService);
   casetypes = this.casetypeService.casetypes;
-  private fb = inject(FormBuilder);
-  private snackBar = inject(MatSnackBar);
-  @ViewChild('fileInput') fileInput!: ElementRef;
   applicationCount = this.applicationService.applicantCount;
   rejCount = this.applicationService.rejectedCount;
   accCount = this.applicationService.acceptedCount;
@@ -71,6 +74,7 @@ export class DashboardComponent {
   userGroup: string | null = null;
   username: string | null = null;
   actionMode = false; // default is view mode
+  searchText = ''; // Keep the value in memory
 
   // FORM GROUP
   actionFormGroup = this.fb.group({
@@ -78,7 +82,6 @@ export class DashboardComponent {
     remarksCtrl: ['', Validators.required],
     dateCtrl: [null as Date | null, Validators.required],
     timeCtrl: ['', Validators.required],
-    // timeCtrl: ['00:00', Validators.required],
     mediatorCtrl: [null as MediatorModel | null, Validators.required],
   });
   // FORM GROUP
@@ -117,9 +120,9 @@ export class DashboardComponent {
   }
 
   backToList() {
-    this.actionFormGroup.reset(); // ✅ Clears the form
-    this.selectedApp = null; // reset to show list again
-    this.actionMode = false; // back to detail view
+    this.actionFormGroup.reset();
+    this.selectedApp = null;
+    this.actionMode = false;
   }
 
   enableActionMode(app: any) {
@@ -218,9 +221,9 @@ export class DashboardComponent {
 
   onSearch(event: Event) {
     const input = event.target as HTMLInputElement;
-    const term = input.value;
+    this.searchText = input.value; // ✅ Persist text
     this.applicationService.currentPage = 1;
-    this.searchSubject.next(term);
+    this.searchSubject.next(this.searchText);
   }
   // FILTERING SEARCH
 
@@ -324,6 +327,34 @@ export class DashboardComponent {
   }
   // SOON AT THE PAGE LOADS RUN ONCE
 
+  // FILE DOWNLOAD
+  async downloadDocument(): Promise<void> {
+    if (!this.selectedApp?.document) return;
+
+    try {
+      const bucket = 'documents';
+
+      // Extract file path from the URL
+      const filePath = this.selectedApp.document.split('/documents/')[1];
+
+      const blob = await this.supabaseService.downloadFile(bucket, filePath);
+      const fileName = filePath.split('/').pop() || 'document.pdf';
+
+      // Force browser download
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Download failed', error);
+    }
+  }
+  // FILE DOWNLOAD
+
   // SUBMIT
   submit(formGroup: FormGroup): void {
     formGroup.markAllAsTouched();
@@ -390,4 +421,34 @@ export class DashboardComponent {
     });
   }
   // SUBMIT
+
+  // CLOSE CASE
+  closeCase(): void {
+    this.loadings = true;
+
+    this.applicationService
+      .updateApplication(this.selectedApp.id, {
+        status: 'Completed',
+      })
+      .subscribe({
+        next: () => {
+          this.loadings = false;
+          this.snackBar.open('Case has been closed, congrats!', 'close', {
+            duration: 3000,
+            panelClass: ['success-snackbar'],
+          });
+          this.backToList();
+        },
+        error: (err) => {
+          this.loadings = false;
+          console.error('Error updating application', err);
+          this.snackBar.open('Failed to update case status', 'close', {
+            duration: 3000,
+            panelClass: ['error-snackbar'],
+          });
+        },
+      });
+  }
+
+  // CLOSE CASE
 }
